@@ -52,7 +52,7 @@ namespace Final_Project_Corona
         //adding color to easily spot passed and failed teasts
         private static void PassedTest(int numTest)
         {
-            
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Passed Test " + numTest);
             Console.ResetColor();
@@ -104,7 +104,7 @@ namespace Final_Project_Corona
 
         private static void TestForNumAndLetter(int num, char letter)
         {
-            Console.WriteLine("**********************TESTS FOR "+num +""+ letter + "**********************");
+            Console.WriteLine("**********************TESTS FOR " + num + "" + letter + "**********************");
         }
         private static void TestStarted(string str, int numTest)
         {
@@ -113,7 +113,7 @@ namespace Final_Project_Corona
         private static void TestStarted(string num1, string num2, char op, int numTest)
         {
             Console.WriteLine("Test " + numTest + " started! sent:");
-            Console.WriteLine("num1 = " + num1 + ", num2 = " + num2 + ", op = "+op);
+            Console.WriteLine("num1 = " + num1 + ", num2 = " + num2 + ", op = " + op);
         }
 
 
@@ -146,7 +146,7 @@ namespace Final_Project_Corona
         }
         private static bool CompareArrSofas(MySofa[] sofasExpected, Sofa[] sofasRecieved)
         {
-            
+
             if (sofasExpected == null && sofasRecieved == null)
                 return true;
             if (sofasExpected == null ^ sofasRecieved == null)
@@ -224,7 +224,7 @@ namespace Final_Project_Corona
             int n = arr.Length;
             if (n == 0)
                 return "[]";
-            for (int i = 0; i < n-1; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 s += arr[i] + ", ";
             }
@@ -260,7 +260,7 @@ namespace Final_Project_Corona
             {
                 s += "Sofa " + i + ": " + StringifyMySofa(arr[i]) + "\n";
             }
-            s += "Sofa " + (n-1) + ": " + StringifyMySofa(arr[n-1]) + "\n]";
+            s += "Sofa " + (n - 1) + ": " + StringifyMySofa(arr[n - 1]) + "\n]";
             return s;
         }
 
@@ -268,7 +268,7 @@ namespace Final_Project_Corona
         {
             int grade = 0;
             int recieved1;
-            Console.WriteLine("Test "+ numTest + "a started! sent: \n" + ArrToString(arr));
+            Console.WriteLine("Test " + numTest + "a started! sent: \n" + ArrToString(arr));
             try
             {
                 Console.WriteLine("**************begin Q1 ouput***************");
@@ -298,7 +298,7 @@ namespace Final_Project_Corona
                 Console.WriteLine("Failed test " + numTest + "a");
                 Console.ResetColor();
             }
-            
+
             if (ManualPrintCheck(expectedSum))
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -315,7 +315,7 @@ namespace Final_Project_Corona
             return grade;
         }
 
-        
+
 
         private static double TestQ1()
         {
@@ -454,31 +454,29 @@ namespace Final_Project_Corona
         }
         private static double GradeThreeSofa(MySofa[] sent, double budget, MySofa[] expected, int numTest)
         {
+            Console.WriteLine("Test " + numTest + " started! sent: \n" + ArrToString(sent) + "\nwith budget = " + budget);
+            Sofa[] recieved;
+            try
             {
-                Console.WriteLine("Test " + numTest + " started! sent: \n" + ArrToString(sent) + "\nwith budget = "+ budget);
                 Sofa[] studentSofaArr = MySofaToStudentsSofa(sent);
-                Sofa[] recieved;
-                try
+                recieved = Program.ThreeSofas(studentSofaArr, budget);
+                FinishedWithoutException();
+                if (CompareArrSofas(expected, recieved))
                 {
-                    recieved = Program.ThreeSofas(studentSofaArr, budget);
-                    FinishedWithoutException();
-                    if (CompareArrSofas(expected, recieved))
-                    {
-                        PassedTest(numTest);
-                        return 1.5;
-                    }
-                    else
-                    {
-                        FailedWithoutException(numTest, ArrToString(expected), ArrToString(StudentsSofaToMySofa(recieved)));
-                        return 0;
-                    }
+                    PassedTest(numTest);
+                    return 1.5;
                 }
-                catch (Exception e)
+                else
                 {
-                    RecievedException(e);
-                    FailedWithExceptions(numTest);
+                    FailedWithoutException(numTest, ArrToString(expected), ArrToString(StudentsSofaToMySofa(recieved)));
                     return 0;
                 }
+            }
+            catch (Exception e)
+            {
+                RecievedException(e);
+                FailedWithExceptions(numTest);
+                return 0;
             }
         }
 
@@ -526,7 +524,7 @@ namespace Final_Project_Corona
                 new MySofa("Dinosofa", "Jurassic Park", 4312.06),
                 new MySofa("Spider Sofa", "Springfield", 1975.91),
                 new MySofa("I am your Sofa", "Death Star", 7571.80),
-                new MySofa("Soofie Doobie Do", "Coolsville", 6110.40) 
+                new MySofa("Soofie Doobie Do", "Coolsville", 6110.40)
             };
             MySofa[] result = { arr[5], arr[6], arr[7] };
             double budget = 15658.11;
@@ -555,7 +553,7 @@ namespace Final_Project_Corona
             return grade;
         }
 
-       
+
 
         private static double Q4StringGrader(HandWeight hw, string expected, int numTest)
         {
@@ -910,13 +908,6 @@ namespace Final_Project_Corona
     }
 
     //additional classes for testing.
-    class DifferentArrayLengthException : Exception
-    {
-        //An exception I've made to handle Comparing Arrays
-        public DifferentArrayLengthException(string message) : base(message)
-        {
-        }
-    }
     class SofaWithResults
     {
         //Data structure to return the sofa arr, the result arr, and budget

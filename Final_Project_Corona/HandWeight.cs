@@ -32,9 +32,11 @@ namespace Final_Project_Corona
         }
         public static void MoveWeight(HandWeight handWeight1, HandWeight handWeight2)
         {
-            HandWeight temp = handWeight1;
-            handWeight1 = handWeight2;
-            handWeight2 = temp;
+            HandWeight temp = new HandWeight(handWeight1.leftWeight, handWeight1.rightWeight);
+            handWeight1.leftWeight = handWeight2.leftWeight;
+            handWeight1.rightWeight = handWeight2.rightWeight;
+            handWeight2.leftWeight = temp.leftWeight;
+            handWeight2.rightWeight = temp.rightWeight;
         }
 
         /* Note:

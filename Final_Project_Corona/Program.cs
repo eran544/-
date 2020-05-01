@@ -12,10 +12,29 @@ namespace Final_Project_Corona
          * Remember: No compilation error should be at the end
          * GOOD LUCK!!!
          */
+         private static void printTriplates(double[] arr)
+        {
 
-        static void Main(string[] args)
+            for (int i = 0; i < arr.Length-2; i++)
+            {
+                for (int j = i+1; j < arr.Length-1; j++)
+                {
+                    for (int k = j+1; k < arr.Length; k++)
+                    {
+                        double sum = arr[i] + arr[j] + arr[k];
+                        Console.WriteLine("i= " + i + " j= "+j + " k=" + k + " sum="+sum);
+                        
+                    }
+                }
+            }
+        }
+
+        static void Main()
         {
             TestTheAssignment.StartTest();
+            //double[] arr = { 2062.12, 9091.98,  5284.59, 1166.33, 4312.06, 1975.91, 7571.80, 6110.4};
+            //printTriplates(arr);
+
         }
 
         public static int Q1(int[] arr)
@@ -46,23 +65,14 @@ namespace Final_Project_Corona
         //Q3b
         public static Sofa[] ThreeSofas(Sofa[] sofas, double budget)
         {
-            for (int i=0; i<sofas.Length-1; i++)
+            for (int i=0; i<sofas.Length-2; i++)
             {
-                for (int j=i+1; j<sofas.Length; j++)
+                for (int j=i+1; j<sofas.Length-1; j++)
                 {
-                    double priceI = sofas[i].GetPrice();
-                    double priceJ = sofas[j].GetPrice();
-
-                    if (priceI*2 + priceJ == budget)
+                    for (int k=j+1; k<sofas.Length; k++)
                     {
-                        Sofa[] output = { sofas[i], sofas[i], sofas[j] };
-                        return output;
-                    }
-
-                    if (priceI + 2*priceJ == budget)
-                    {
-                        Sofa[] output = { sofas[j], sofas[j], sofas[i] };
-                        return output;
+                        if (sofas[i].GetPrice() + sofas[j].GetPrice() + sofas[k].GetPrice() == budget)
+                            return new Sofa[] { sofas[i], sofas[j], sofas[k] };
                     }
                 }
             }
@@ -76,7 +86,7 @@ namespace Final_Project_Corona
             int output = 0;
             for (int i=0; i<num.Length; i++)
             {
-                output = output * 10;
+                output *= 10;
                 int digit = num[i] - '0';
                 output += digit;
             }
@@ -107,7 +117,7 @@ namespace Final_Project_Corona
                 num1 += dig;
             }
             op = st.Pop();
-            while (st.IsEmpty() || st.Top() == '=')
+            while (!st.IsEmpty() && st.Top() != '=')
             {
                 char dig = st.Pop();
                 num2 += dig;

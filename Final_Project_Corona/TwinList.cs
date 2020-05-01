@@ -7,7 +7,7 @@ namespace Final_Project_Corona
     {
         //Q5
         //add fileds as you wish
-        Node<int> chain;
+        private Node<int> chain;
 
 
         //Complete those methods as requested in the assignment
@@ -18,8 +18,8 @@ namespace Final_Project_Corona
         }
         public Node<int> GetEven()
         {
-            int i = 3;
-            Node<int> n = chain.GetNext(), output = new Node<int>(chain.GetInfo());
+            int i = 1;
+            Node<int> n = chain, output = new Node<int>(chain.GetInfo());
             Node<int> holder = output;
             while (n != null)
             {

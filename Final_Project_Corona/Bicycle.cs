@@ -12,7 +12,7 @@ namespace Final_Project_Corona
         private double currentPrecentage;
 
         public Bicycle(int licensePlate, int numOfSeats, int numOfWheels, string owner) :
-            base (licensePlate, numOfSeats, numOfSeats, owner)
+            base (licensePlate, numOfSeats, numOfWheels, owner)
         {
             currentPrecentage = 50;
         }
@@ -24,7 +24,7 @@ namespace Final_Project_Corona
 
         public void Charge (int minutes)
         {
-            currentPrecentage = Math.Min(100, currentPrecentage + (PERCENTAGE_PER_MINUTES * minutes));
+            currentPrecentage = Math.Min(MAX_PRECENTAGE, currentPrecentage + (PERCENTAGE_PER_MINUTES * minutes));
         }
 
         public override string ToString()

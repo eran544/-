@@ -15,6 +15,15 @@ namespace Final_Project_Corona
 
         static void CheckYourselfForCompilationErrors()
         {
+            /* How to use this function:
+             * 1. Copy & Paste it as a seperate function in Program.cs
+             * 2. Check if you have any compilation errors in this function
+             * If you find Some, then change your code (Not this function!!!) so it will not have any compilation code
+             * If there is no compilation errors then it's awesome because we can test your work
+             * but it doesn't say anything about the quality of your assignment and what the grade should be.
+             * GOOD LUCK!
+             * 
+             */
             //Q1
             int[] arr = new int[62];
             Q1(arr);

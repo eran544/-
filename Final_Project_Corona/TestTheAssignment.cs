@@ -6,7 +6,7 @@ namespace Final_Project_Corona
 {
     class TestTheAssignment
     {
-        /* Instructions - Please read it:
+         /* Instructions - Please read it:
          * The purpose of this code is to check and test
          * the correction of each task according to the
          * specifications detailed in the PDF.
@@ -611,9 +611,19 @@ namespace Final_Project_Corona
             BeginQNum(4);
             double maxGrade = 6;
             double grade = 0;
-            HandWeight hw1 = new HandWeight();
-            HandWeight hw2 = new HandWeight(2.5);
-            HandWeight hw3 = new HandWeight(3.14, 2);
+            HandWeight hw1, hw2, hw3;
+            try
+            {
+                hw1 = new HandWeight();
+                hw2 = new HandWeight(2.5);
+                hw3 = new HandWeight(3.14, 2);
+            }
+            catch (Exception e)
+            {
+                RecievedException(e);
+                Console.WriteLine("Since it recieved Exception in constrctor: Recieved 0");
+                return 0;
+            }
             string expected0 = "<Left: 0, Right: 0>";
             string expected25 = "<Left: 2.5, Right: 2.5>";
             string expectedpi = "<Left: 3.14, Right: 2>";

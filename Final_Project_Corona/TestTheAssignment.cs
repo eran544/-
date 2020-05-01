@@ -827,7 +827,8 @@ namespace Final_Project_Corona
                 3 => StackGenerator3(),
                 4 => StackGenerator4(),
                 5 => StackGenerator5(),
-                _ => throw new NotSupportedException("This should not happen in stackGenerator"),
+                //not likely to happen, but still
+                _ => throw new NotSupportedException("This should not happen in StackGenerator"),
             };
             return Q6cGrader(result.Stack, result.Result, num);
         }
@@ -952,7 +953,7 @@ namespace Final_Project_Corona
     class MySofa
     {
         // This is my solution for this simple class
-        // Created to test the fucyionality of students' solution for the Sofa class
+        // Created to test the fucuionality of students' solution for the Sofa class
         // (And the whole Q3)
         private string model;
         private string country;

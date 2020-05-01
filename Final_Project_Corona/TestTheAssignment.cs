@@ -896,7 +896,7 @@ namespace Final_Project_Corona
             const int MAX_GRADE = 60;
             grade += TestQ1(); // OK
             grade += TestQ2(); // OK   
-            grade += TestQ3(); // in-testing 
+            grade += TestQ3(); // OK 
             grade += TestQ4(); // OK
             grade += TestQ5(); // not written yet 
             grade += TestQ6(); // OK

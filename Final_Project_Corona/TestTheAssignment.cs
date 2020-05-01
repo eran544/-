@@ -122,9 +122,9 @@ namespace Final_Project_Corona
 
         private static bool CompareSofas(MySofa s1, Sofa s2)
         {
-            return s1.GetCountry().ToLower() == s2.GetCountry().ToLower() &&
-                   s1.GetModel().ToLower() == s2.GetModel().ToLower() &&
-                   Math.Abs(s1.GetPrice() - s2.GetPrice()) < 0.01;
+            return s1.Country.ToLower() == s2.GetCountry().ToLower() &&
+                   s1.Model.ToLower() == s2.GetModel().ToLower() &&
+                   Math.Abs(s1.Price - s2.GetPrice()) < 0.01;
         }
 
         /* This Methods removes all whitespaces in a string
@@ -165,7 +165,7 @@ namespace Final_Project_Corona
         }
         private static string StringifyMySofa(MySofa sofa)
         {
-            return "<Model: \"" + sofa.GetModel() + "\", Country: \"" + sofa.GetCountry() + "\", Price = " + sofa.GetPrice() + ">";
+            return "<Model: \"" + sofa.Model + "\", Country: \"" + sofa.Country + "\", Price = " + sofa.Price + ">";
         }
 
         private static bool CompareToString(string s1, string s2)
@@ -407,7 +407,7 @@ namespace Final_Project_Corona
                 bool recieved;
                 try
                 {
-                    Sofa studentSofa = new Sofa(sent.GetModel(), sent.GetCountry(), sent.GetPrice());
+                    Sofa studentSofa = new Sofa(sent.Model, sent.Country, sent.Price);
                     recieved = CompareSofas(sent, studentSofa);
                     FinishedWithoutException();
                     if (recieved)
@@ -437,7 +437,7 @@ namespace Final_Project_Corona
             Sofa[] output = new Sofa[arr.Length];
             for (int i = 0; i < arr.Length; i++)
             {
-                output[i] = new Sofa(arr[i].GetModel(), arr[i].GetCountry(), arr[i].GetPrice());
+                output[i] = new Sofa(arr[i].Model, arr[i].Country, arr[i].Price);
             }
             return output;
         }
@@ -920,64 +920,45 @@ namespace Final_Project_Corona
     class SofaWithResults
     {
         //Data structure to return the sofa arr, the result arr, and budget
-        private MySofa[] sofas;
-        private MySofa[] result;
-        private double budget;
         public SofaWithResults(MySofa[] sofas, MySofa[] result, double budget)
         {
             Sofas = sofas;
             Result = result;
             Budget = budget;
         }
-
-
-        public double Budget { get => budget; set => budget = value; }
-        internal MySofa[] Sofas { get => sofas; set => sofas = value; }
-        internal MySofa[] Result { get => result; set => result = value; }
+        public double Budget { get; set; }
+        internal MySofa[] Sofas { get; set; }
+        internal MySofa[] Result { get; set; }
     }
 
     class StackWithResult
     {
         //Data structure to return both the stack and the expected results
-        private Stack<char> stack;
-        private int result;
         public StackWithResult(Stack<char> stack, int result)
         {
             Stack = stack;
             Result = result;
         }
 
-        public Stack<char> Stack { get => stack; set => stack = value; }
-        public int Result { get => result; set => result = value; }
+        public Stack<char> Stack { get; set; }
+        public int Result { get; set; }
     }
     class MySofa
     {
         // This is my solution for this simple class
-        // Created to test the fucuionality of students' solution for the Sofa class
+        // Created to test the funcuionality of students' solution for the Sofa class
         // (And the whole Q3)
-        private string model;
-        private string country;
-        private double price;
+
+        public string Model { get; set; }
+        public string Country { get; set; }
+        public double Price { get; set; }
 
         public MySofa(string model, string country, double price)
         {
-            this.model = model;
-            this.country = country;
-            this.price = price;
+            this.Model = model;
+            this.Country = country;
+            this.Price = price;
         }
 
-        public string GetModel()
-        {
-            return this.model;
-        }
-
-        public string GetCountry()
-        {
-            return this.country;
-        }
-        public double GetPrice()
-        {
-            return this.price;
-        }
     }
 }

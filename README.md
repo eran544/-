@@ -19,6 +19,7 @@ HOW TO USE THIS FILE BY YOURSELF:
 7. After the test of each task is completed you will see how points you were graded.
     You can easily spot it since it will be colored blue.
 8. To continue testing the next task, press Enter.
+9. If you got anymore questions, please dont hesitate asking Adir or me (Eran).
 
 Copyright: Eran Salomon, Mekif Vav school, Beersheva, Israel
 Date: April - May 2020

@@ -6,30 +6,133 @@ namespace Final_Project_Corona
 {
     class TestTheAssignment
     {
-         /* Instructions - Please read it:
-         * The purpose of this code is to check and test
-         * the correction of each task according to the
-         * specifications detailed in the PDF.
-         * HOW TO USE THIS FILE BY YOURSELF:
-         * 1. Replace your own "TestTheAssignment.cs" file with this one
-         * 2. On "Program.cs", at Main(): Write the following line:
-         *    "TestTheAssignment.StartTest();"
-         * 3. Run the project
-         * 4. Watch the magic happens :)
-         * 5. On task 1: Answer the question regarding the printing 
-         * 6. Every test you pass will be followed by 2 messages colored green
-         *    Every test that finished without exception but still failed:
-         *          Will be seen by one green message and one red message.
-         *    Every Test that will recieve Exception:
-         *          Will be seen by 2 messages colored red, with details about the Exception.
-         * 7. After the test of each task is completed you will see how points you were graded.
-         *    You can easily spot it since it will be colored blue.
-         * 8. To continue testing the next task, press Enter.
-         * 9. If you got anymore questions, please dont hesitate asking Adir or me (Eran).
-         * 
-         * Copyright: Eran Salomon, Mekif Vav School, Beersheva, Israel.
-         * Date: April - May 2020
-         */
+        /* Instructions - Please read it:
+        * The purpose of this code is to check and test
+        * the correction of each task according to the
+        * specifications detailed in the PDF.
+        * HOW TO USE THIS FILE BY YOURSELF:
+        * 1. Replace your own "TestTheAssignment.cs" file with this one
+        * 2. On "Program.cs", at Main(): Write the following line:
+        *    "TestTheAssignment.StartTest();"
+        * 3. Run the project
+        * 4. Watch the magic happens :)
+        * 5. On task 1: Answer the question regarding the printing 
+        * 6. Every test you pass will be followed by 2 messages colored green
+        *    Every test that finished without exception but still failed:
+        *          Will be seen by one green message and one red message.
+        *    Every Test that will recieve Exception:
+        *          Will be seen by 2 messages colored red, with details about the Exception.
+        * 7. After the test of each task is completed you will see how points you were graded.
+        *    You can easily spot it since it will be colored blue.
+        * 8. To continue testing the next task, press Enter.
+        * 9. If you got anymore questions, please dont hesitate asking Adir or me (Eran).
+        * 
+        * Copyright: Eran Salomon, Mekif Vav School, Beersheva, Israel.
+        * Date: April - May 2020
+        */
+        /*
+        public static void CheckYourselfForCompilationErrors()
+        {
+            /* How to use this function:
+             * 1. Copy & Paste it as a seperate function in TestTheAssignment.cs
+             * 2. Check if you have any compilation errors in this function
+             * If you find Some, then change your code (Not this function!!!)
+             * so it will not have any compilation code
+             * If there is no compilation errors then it's awesome because we can test your work
+             * however it doesn't say anything about the quality of your assignment 
+             * nor what your grade should be.
+             * Note: There is no need to run this function at all, just check for errors
+             * GOOD LUCK!
+             * 
+             *
+            //Q1
+            int[] arr = new int[62];
+            Program.Q1(arr);
+            //Q2
+            bool[] arr2 = new bool[0];
+            Program.Q2(arr2);
+            //Q3a - check if constructor and gets work properly
+            Sofa stam = new Sofa("Stam model", "Stan country", 0);
+            string st = stam.GetModel();
+            st = stam.GetCountry();
+            double num = stam.GetPrice();
+            //Q3b - check if you can send proparly
+            Sofa[] stamArr = { stam, stam, stam };
+            Sofa[] stamResult = Program.ThreeSofas(stamArr, 0);
+
+            //Q4
+            HandWeight handWeight = new HandWeight();
+            bool stamBool = handWeight.IsBalanced();
+            HandWeight handWeight1 = new HandWeight(3);
+            HandWeight.MoveWeight(handWeight, handWeight1);
+            HandWeight handWeight2 = new HandWeight(3.14, 3);
+            st = handWeight.ToString();
+
+            //Q5
+            Node<int> stamNode = new Node<int>(1);
+            stamNode.SetNext(new Node<int>(2));
+            TwinList twinList = new TwinList(stamNode);
+            Node<int> stamNode1 = twinList.GetOdd();
+            Node<int> stamNode2 = twinList.GetEven();
+            Node<int> stamNode3 = twinList.SwitchChain();
+
+            //Q6
+            int stamNum = Program.StringToInt("15");
+            stamNum = Program.CalcStr("1", "1", '+');
+            Stack<char> stamStack = new Stack<char>();
+            stamStack.Push('=');
+            stamStack.Push('1');
+            stamStack.Push('+');
+            stamStack.Push('1');
+            stamNum = Program.MathStack(stamStack);
+
+            //Q7
+            BinNode<int> stamTree = new BinNode<int>(1);
+            stamBool = Program.IsStatic(stamTree);
+            stamBool = Program.IsVeryStatic(stamTree);
+
+            //Q8
+            //car
+            Car stamCar = new Car(123, 5, 4, "Me", 5);
+            stamNum = stamCar.GetLicensePlate();
+            stamNum = stamCar.GetNumOfSeats();
+            stamNum = stamCar.GetNumOfWheels();
+            stamCar.SellVehicle("You");
+            st = stamCar.GetOwner();
+            stamCar.SetAmount(2);
+            num = stamCar.GetAmount();
+            num = stamCar.GetCapacity();
+            stamCar.FuelUp();
+            st = stamCar.ToString();
+
+            //Bicycle
+            Bicycle bicycle = new Bicycle(123, 1, 2, "Me");
+            stamNum = bicycle.GetLicensePlate();
+            stamNum = bicycle.GetNumOfSeats();
+            stamNum = bicycle.GetNumOfWheels();
+            bicycle.SellVehicle("You");
+            st = bicycle.GetOwner();
+            bicycle.Ride(5);
+            bicycle.Charge(5);
+            st = stamCar.ToString();
+
+            //Bus
+            Bus bus = new Bus(123, 50, 10, "Dan Beersheva", 100, 8);
+            stamNum = bus.GetLicensePlate();
+            stamNum = bus.GetNumOfSeats();
+            stamNum = bus.GetNumOfWheels();
+            bus.SellVehicle("Metropoline");
+            st = bus.GetOwner();
+            bus.SetAmount(2);
+            num = bus.GetAmount();
+            num = bus.GetCapacity();
+            bus.FuelUp();
+            st = bus.ToString();
+            stamNum = bus.GetBusLine();
+            bus.ChangeBusLine(25);
+
+        }
+        */
 
 
 

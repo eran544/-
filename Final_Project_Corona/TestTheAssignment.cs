@@ -30,7 +30,7 @@ namespace Final_Project_Corona
         * Copyright: Eran Salomon, Mekif Vav School, Beersheva, Israel.
         * Date: April - May 2020
         */
-        /*
+        /* Here is the fuction to test compilation errors
         public static void CheckYourselfForCompilationErrors()
         {
             /* How to use this function:
@@ -282,8 +282,7 @@ namespace Final_Project_Corona
                 return true;
             if (b1 == null && b2 != null || b1 != null && b2 == null)
                 return false;
-            return b1.GetInfo() == b2.GetInfo() 
-                && CompareTrees(b1.GetLeft(), b2.GetLeft())
+            return b1.GetInfo() == b2.GetInfo() && CompareTrees(b1.GetLeft(), b2.GetLeft())
                 && CompareTrees(b1.GetRight(), b2.GetRight());
         }
 
@@ -312,10 +311,13 @@ namespace Final_Project_Corona
                 {
                     c = char.Parse(Console.ReadLine());
                 }
-                catch (FormatException) { }
+                catch (Exception) { }
                 //in case by mistake input was in wrong format
-                if (c != 'y' && c != 'n')
-                    Console.WriteLine("Wrong Input, try again");
+                finally
+                {
+                    if (c != 'y' && c != 'n')
+                        Console.WriteLine("Wrong Input, try again");
+                }
             }
             return c == 'y';
         }
@@ -634,21 +636,34 @@ namespace Final_Project_Corona
             double budget = 15658.11;
             return new SofaWithResults(arr, result, budget);
         }
+
+        private static double SofaGenerator(int num)
+        {
+            //this works only with VS 2019
+            SofaWithResults result = num switch
+            {
+                1 => SofaGenerator1(),
+                2 => SofaGenerator2(),
+                3 => SofaGenerator3(),
+                _ => throw new NotSupportedException("This should not happen in SofaGenerator")
+            };
+            return GradeThreeSofa(result.Sofas, result.Budget, result.Result, num);
+        }
         private static double TestQ3()
         {
             BeginQNum(3);
             double maxGrade = 6;
             double grade = 0;
+            TestForNumAndLetter(3, 'a');
             MySofa test1 = new MySofa("Kosher Model", "Israel", 999.99);
             grade += GradeClassSofa(test1, 1);
             MySofa test2 = new MySofa("Wingardium Levisofa", "Hogwarts", 729.99);
             grade += GradeClassSofa(test2, 2);
-            SofaWithResults sofa1 = SofaGenerator1();
-            grade += GradeThreeSofa(sofa1.Sofas, sofa1.Budget, sofa1.Result, 3);
-            SofaWithResults sofa2 = SofaGenerator2();
-            grade += GradeThreeSofa(sofa2.Sofas, sofa2.Budget, sofa2.Result, 4);
-            SofaWithResults sofa3 = SofaGenerator3();
-            grade += GradeThreeSofa(sofa3.Sofas, sofa3.Budget, sofa3.Result, 5);
+            TestForNumAndLetter(3, 'b');
+            for (int i = 1; i < 4; i++)
+            {
+                grade += SofaGenerator(i);
+            }
 
             EndQNum(3);
             Recieved(maxGrade, grade);
@@ -930,6 +945,7 @@ namespace Final_Project_Corona
             return new StackWithResult(s, 0);
         }
 
+
         private static double StackGenerator(int num)
         {
             //this works only with VS 2019
@@ -978,13 +994,180 @@ namespace Final_Project_Corona
         }
 
 
+        private static double Q7aGrader(BinNode<int> root, bool expected, int numTest)
+        {
+            TestStarted("Bin Tree - view code and details", numTest);
+            bool recieved;
+            try
+            {
+                recieved = Program.IsStatic(root);
+                FinishedWithoutException();
+                if (recieved == expected)
+                {
+                    PassedTest(numTest);
+                    return 1;
+                }
+                FailedWithoutException(numTest, expected, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+
+        private static double Q7bGrader(BinNode<int> root, bool expected, int numTest)
+        {
+            TestStarted("Bin Tree - view code and details", numTest);
+            bool recieved;
+            try
+            {
+                recieved = Program.IsVeryStatic(root);
+                FinishedWithoutException();
+                if (recieved == expected)
+                {
+                    PassedTest(numTest);
+                    return 1;
+                }
+                FailedWithoutException(numTest, expected, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+
+        private static TreeWithResult TreeGenerator1()
+        {
+            //only root - should return true
+            return new TreeWithResult(new BinNode<int>(8), true);
+        }
+        private static TreeWithResult TreeGenerator2()
+        {
+            //root 8, left 6. right 5 - should return false
+            BinNode<int> tree = new BinNode<int>(8);
+            tree.SetLeft(new BinNode<int>(6));
+            tree.SetRight(new BinNode<int>(5));
+            return new TreeWithResult(tree, false);
+        }
+        private static TreeWithResult TreeGenerator3()
+        {
+            /*root 8
+             * left 6
+             * right 5 
+             * right right 3
+             * right right left 2
+             * should return true
+             */
+            BinNode<int> tree = new BinNode<int>(8);
+            tree.SetLeft(new BinNode<int>(6));
+            tree.SetRight(new BinNode<int>(5));
+            tree.GetRight().SetRight(new BinNode<int>(4));
+            tree.GetRight().GetRight().SetLeft(new BinNode<int>(2));
+            return new TreeWithResult(tree, true);
+        }
+        private static TreeWithResult TreeGenerator4()
+        {
+            /* root 21
+             * right 5 
+             * right right 3
+             * right right right 9
+             * left 6 
+             * left left 2
+             * left left right 4
+             * left left right left 4
+             * left left right right 5
+             * should return false
+             */
+            BinNode<int> tree = new BinNode<int>(21);
+            tree.SetLeft(new BinNode<int>(6));
+            tree.GetLeft().SetLeft(new BinNode<int>(2));
+            tree.GetLeft().SetRight(new BinNode<int>(4));
+            tree.GetLeft().GetRight().SetLeft(new BinNode<int>(4));
+            tree.GetLeft().GetRight().SetRight(new BinNode<int>(5));
+            tree.SetRight(new BinNode<int>(5));
+            tree.GetRight().SetRight(new BinNode<int>(3));
+            tree.GetRight().GetRight().SetRight(new BinNode<int>(9));
+            return new TreeWithResult(tree, false);
+        }
+        private static TreeWithResult TreeGenerator5()
+        {
+            //only root - should return true
+            //took the same as TreeGenerator1()
+            return TreeGenerator1();
+        }
+        private static TreeWithResult TreeGenerator6()
+        {
+            /* root 9
+             * left 6
+             * right 3 
+             * right right 3
+             * right right right 1
+             * right right left 2
+             * should return true
+             */
+            BinNode<int> tree = new BinNode<int>(9);
+            tree.SetLeft(new BinNode<int>(6));
+            tree.SetRight(new BinNode<int>(3));
+            tree.GetRight().SetRight(new BinNode<int>(3));
+            tree.GetRight().GetRight().SetLeft(new BinNode<int>(2));
+            tree.GetRight().GetRight().SetRight(new BinNode<int>(1));
+            return new TreeWithResult(tree, true);
+        }
+        private static TreeWithResult TreeGenerator7()
+        {
+            //The same as TreeGenerator3() but false
+            TreeWithResult tree = TreeGenerator3();
+            tree.Result = false;
+            return tree;
+        }
+        private static TreeWithResult TreeGenerator8()
+        {
+            TreeWithResult tree = TreeGenerator4();
+            tree.Tree.SetInfo(20);
+            return tree;
+        }
+
+        private static double TreeGenerator(int num)
+        {
+            //this works only with VS 2019
+            TreeWithResult result = num switch
+            {
+                1 => TreeGenerator1(),
+                2 => TreeGenerator2(),
+                3 => TreeGenerator3(),
+                4 => TreeGenerator4(),
+                5 => TreeGenerator5(),
+                6 => TreeGenerator6(),
+                7 => TreeGenerator7(),
+                8 => TreeGenerator8(),
+                _ => throw new NotSupportedException("This should not happen in StackGenerator"),
+            };
+            if (num <=4)
+                return Q7aGrader(result.Tree, result.Result, num);
+            return Q7bGrader(result.Tree, result.Result, num);
+        }
 
         private static double TestQ7()
         {
             BeginQNum(7);
             double maxGrade = 8;
             double grade = 0;
-
+            TestForNumAndLetter(7, 'a');
+            int i;
+            for (i = 1; i < 9; i++)
+            {
+                if (i == 5)
+                    TestForNumAndLetter(7, 'b');
+                grade += TreeGenerator(i);
+            }
             EndQNum(7);
             Recieved(maxGrade, grade);
             PrintStarsAndPressEnter();
@@ -1014,7 +1197,7 @@ namespace Final_Project_Corona
             grade += TestQ4(); // OK
             grade += TestQ5(); // not written yet 
             grade += TestQ6(); // OK
-            grade += TestQ7(); // not written yet 
+            grade += TestQ7(); // in testing 
             grade += TestQ8(); // not written yet 
             Console.WriteLine("***************FINISHED ALL TESTS******************");
             Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);
@@ -1023,6 +1206,24 @@ namespace Final_Project_Corona
     }
 
     //additional classes for testing.
+    class MySofa
+    {
+        // This is my solution for this simple class
+        // Created to test the funcuionality of students' solution for the Sofa class
+        // (And the whole Q3)
+
+        public string Model { get; set; }
+        public string Country { get; set; }
+        public double Price { get; set; }
+
+        public MySofa(string model, string country, double price)
+        {
+            Model = model;
+            Country = country;
+            Price = price;
+        }
+
+    }
     class SofaWithResults
     {
         //Data structure to return the sofa arr, the result arr, and budget
@@ -1049,22 +1250,17 @@ namespace Final_Project_Corona
         public Stack<char> Stack { get; set; }
         public int Result { get; set; }
     }
-    class MySofa
+
+    class TreeWithResult
     {
-        // This is my solution for this simple class
-        // Created to test the funcuionality of students' solution for the Sofa class
-        // (And the whole Q3)
 
-        public string Model { get; set; }
-        public string Country { get; set; }
-        public double Price { get; set; }
-
-        public MySofa(string model, string country, double price)
+        public TreeWithResult(BinNode<int> tree, bool result)
         {
-            Model = model;
-            Country = country;
-            Price = price;
+            Tree = tree;
+            Result = result;
         }
 
+        public BinNode<int> Tree { get; set; }
+        public bool Result { get; set; }
     }
 }

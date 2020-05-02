@@ -282,7 +282,8 @@ namespace Final_Project_Corona
                 return true;
             if (b1 == null && b2 != null || b1 != null && b2 == null)
                 return false;
-            return b1.GetInfo() == b2.GetInfo() && CompareTrees(b1.GetLeft(), b2.GetLeft())
+            return b1.GetInfo() == b2.GetInfo() 
+                && CompareTrees(b1.GetLeft(), b2.GetLeft())
                 && CompareTrees(b1.GetRight(), b2.GetRight());
         }
 
@@ -589,7 +590,7 @@ namespace Final_Project_Corona
             {
                 new MySofa("Kosher Model", "Israel", 500.24),
                 new MySofa("Mama Sofa", "Italy", 624.75),
-                new MySofa("La Sofa", "Spain", 328.93),
+                new MySofa("Lá Sofá", "Spain", 328.93),
                 new MySofa("Ljublisofa", "Slovenia", 221.28),
                 new MySofa("Mi Fan Sofa", "China", 990.5),
                 new MySofa("Namastofa", "India", 384.75)
@@ -603,7 +604,7 @@ namespace Final_Project_Corona
         {
             MySofa[] arr =
 {
-                new MySofa("Unemployed Sofa", "South Africa", 1426.17),
+                new MySofa("Queen's Sofa", "United Kindom", 1426.17),
                 new MySofa("Apologizing Sofa", "Canada", 1431.11),
                 new MySofa("LMFAO Sofa", "United States", 847.96),
                 new MySofa("Moscofa", "Russia", 2221.28),
@@ -912,25 +913,26 @@ namespace Final_Project_Corona
 
         private static StackWithResult StackGenerator5()
         {
-            //98732 - 64118 = 34614
+            //123456789 * 0 = 0
             Stack<char> s = new Stack<char>();
             //starting here
-            s.Push('8');
+            s.Push('0');
+            s.Push('*');
             s.Push('1');
-            s.Push('1');
-            s.Push('4');
-            s.Push('6');
-            s.Push('-');
             s.Push('2');
             s.Push('3');
+            s.Push('4');
+            s.Push('5');
+            s.Push('6');
             s.Push('7');
             s.Push('8');
             s.Push('9');
-            return new StackWithResult(s, 34614);
+            return new StackWithResult(s, 0);
         }
 
         private static double StackGenerator(int num)
         {
+            //this works only with VS 2019
             StackWithResult result = num switch
             {
                 1 => StackGenerator1(),
@@ -1059,9 +1061,9 @@ namespace Final_Project_Corona
 
         public MySofa(string model, string country, double price)
         {
-            this.Model = model;
-            this.Country = country;
-            this.Price = price;
+            Model = model;
+            Country = country;
+            Price = price;
         }
 
     }

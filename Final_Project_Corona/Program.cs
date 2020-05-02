@@ -62,18 +62,23 @@ namespace Final_Project_Corona
             return null;
         }
 
+        //Auxilary recursive function for Q6a
+        private static int StringToInt(string num, int n)
+        {
+            if (num.Length == 0)
+                return n;
+            n *= 10;
+            int digit = num[0] - '0';
+            n += digit;
+            return StringToInt(num.Substring(1), n);
+        }
+
         //Q6a
         //Note: using int.Parse() is not allowed
         public static int StringToInt(string num)
         {
-            int output = 0;
-            for (int i=0; i<num.Length; i++)
-            {
-                output *= 10;
-                int digit = num[i] - '0';
-                output += digit;
-            }
-            return output;
+            //Calling to auxilary recursive function
+            return StringToInt(num, 0);
         }
 
         //Q6b

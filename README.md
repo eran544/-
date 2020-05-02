@@ -4,7 +4,8 @@ Instructions - Please read it:
 The purpose of this code is to check and test
 the correction of each task according to the
 specifications detailed in the PDF.
-HOW TO USE THIS FILE BY YOURSELF:
+
+HOW TO USE TestYourAssignment.cs BY YOURSELF:
 1. Replace your own "TestTheAssignment.cs" file with this one
 2. On "Program.cs", at Main(): Write the following line:
    "TestTheAssignment.StartTest();"

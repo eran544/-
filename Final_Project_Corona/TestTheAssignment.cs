@@ -27,6 +27,10 @@ namespace Final_Project_Corona
         * 8. To continue testing the next task, press Enter.
         * 9. If you got anymore questions, please dont hesitate asking Adir or me (Eran).
         * 
+        * Note: In case of Stack Overflow Exception in our automatic testing, made due to incorrect recursive implementation:
+        * Since that exception cannot be caught by try-catch,  we will replace it by
+        * throwing new NotImplementedException, dropping all the points of this function, 
+        * even if it did pass one or more of previous tests.
         * Copyright: Eran Salomon, Mekif Vav School, Beersheva, Israel.
         * Date: April - May 2020
         */
@@ -56,6 +60,30 @@ namespace Final_Project_Corona
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Passed Test " + numTest);
+            Console.ResetColor();
+        }
+        private static void PassedTest(int numTest, int expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Passed Test " + numTest + ", recieved as expected: " + expected);
+            Console.ResetColor();
+        }
+        private static void PassedTest(int numTest, bool expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + expected);
+            Console.ResetColor();
+        }
+        private static void PassedTest(int numTest, MySofa[] expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + ArrToString(expected));
+            Console.ResetColor();
+        }
+        private static void PassedTest(int numTest, string expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + expected);
             Console.ResetColor();
         }
         private static void FinishedWithoutException()
@@ -90,6 +118,37 @@ namespace Final_Project_Corona
             Console.ResetColor();
 
         }
+        private static void RecievedException(Exception e, MySofa expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Expected: " + StringifyMySofa(expected) + " but recieved Exception: " + e.Message);
+            Console.ResetColor();
+        }
+        private static void RecievedException(Exception e, int expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
+            Console.ResetColor();
+        }
+        private static void RecievedException(Exception e, string expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
+            Console.ResetColor();
+        }
+        private static void RecievedException(Exception e, bool expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
+            Console.ResetColor();
+        }
+        private static void RecievedException(Exception e, MySofa[] expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Expected: " + ArrToString(expected) + " but recieved Exception: " + e.Message);
+            Console.ResetColor();
+        }
+
         private static void FailedWithExceptions(int numTest)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -285,7 +344,7 @@ namespace Final_Project_Corona
                 {
                     grade += 1;
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Passed Test " + numTest + "a");
+                    Console.WriteLine("Passed Test " + numTest + "a. Expected result was " +expected);
                     Console.ResetColor();
                 }
                 else
@@ -297,7 +356,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Failed test " + numTest + "a");
                 Console.ResetColor();
@@ -318,7 +377,6 @@ namespace Final_Project_Corona
             }
             return grade;
         }
-
 
 
         private static double TestQ1()
@@ -356,19 +414,18 @@ namespace Final_Project_Corona
                 if (recieved == expected)
                 {
                     grade = 0.5;
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                 }
                 else
                     FailedWithoutException(numTest, expected, recieved);
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
             }
             return grade;
         }
-
 
         private static double TestQ2()
         {
@@ -427,7 +484,7 @@ namespace Final_Project_Corona
                 }
                 catch (Exception e)
                 {
-                    RecievedException(e);
+                    RecievedException(e, sent);
                     FailedWithExceptions(numTest);
                     return 0;
                 }
@@ -467,7 +524,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (CompareArrSofas(expected, recieved))
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 1.5;
                 }
                 else
@@ -478,11 +535,13 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
         }
+
+
 
         private static SofaWithResults SofaGenerator1()
         {
@@ -522,13 +581,14 @@ namespace Final_Project_Corona
             MySofa[] arr =
             {
                 new MySofa("My Precious Sofa", "Mordor", 2062.12),
-                new MySofa("Wingardium Levisofa", "Hogwarts", 9091.98),
-                new MySofa("SpongeBob SquareSofa", "Bikini Bottom", 5284.59),
+                new MySofa("Spider Sofa", "Springfield", 9091.98),
+                new MySofa("Soofie Doobie Do", "Coolsville", 5284.59),
                 new MySofa("The Hunger Sofa", "12th district", 1166.33),
                 new MySofa("Dinosofa", "Jurassic Park", 4312.06),
-                new MySofa("Spider Sofa", "Springfield", 1975.91),
+                new MySofa("Wingardium Levisofa", "Hogwarts", 1975.91),
                 new MySofa("I am your Sofa", "Death Star", 7571.80),
-                new MySofa("Soofie Doobie Do", "Coolsville", 6110.40)
+                new MySofa("SpongeBob SquareSofa", "Bikini Bottom", 6110.4),
+
             };
             MySofa[] result = { arr[5], arr[6], arr[7] };
             double budget = 15658.11;
@@ -582,7 +642,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (CompareToString(expected, recieved))
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 0.75;
                 }
                 FailedWithoutException(numTest, expected, recieved);
@@ -591,11 +651,14 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
         }
+
+
+
         private static double Q4BoolGrader(HandWeight hw, string hwString, bool expected, int numTest)
         {
             TestStarted(hwString, numTest);
@@ -606,7 +669,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 0.75;
                 }
                 FailedWithoutException(numTest, expected, recieved);
@@ -615,7 +678,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
@@ -638,7 +701,7 @@ namespace Final_Project_Corona
             catch (Exception e)
             {
                 RecievedException(e);
-                Console.WriteLine("Since it recieved Exception in constrctor: Recieved 0");
+                Console.WriteLine("Since it recieved Exception in constrctor of HandWeight: No tests will be applied to this task");
                 return 0;
             }
             string expected0 = "<Left: 0, Right: 0>";
@@ -686,7 +749,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 0.5;
                 }
                 FailedWithoutException(numTest, expected, recieved);
@@ -695,7 +758,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
@@ -713,7 +776,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 0.5;
                 }
                 FailedWithoutException(numTest, expected, recieved);
@@ -722,7 +785,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
@@ -738,7 +801,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 1;
                 }
                 FailedWithoutException(numTest, expected, recieved);
@@ -747,7 +810,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
@@ -902,7 +965,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 1;
                 }
                 FailedWithoutException(numTest, expected, recieved);
@@ -911,7 +974,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
@@ -927,7 +990,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
-                    PassedTest(numTest);
+                    PassedTest(numTest, expected);
                     return 1;
                 }
                 FailedWithoutException(numTest, expected, recieved);
@@ -936,7 +999,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
+                RecievedException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
@@ -1022,12 +1085,15 @@ namespace Final_Project_Corona
         private static TreeWithResult TreeGenerator7()
         {
             //The same as TreeGenerator3() but false
+            //the tree is static but not bery static
             TreeWithResult tree = TreeGenerator3();
             tree.Result = false;
             return tree;
         }
         private static TreeWithResult TreeGenerator8()
         {
+            //the same as TreeGenerator4() but root is 20
+            //the tree is static but not very static
             TreeWithResult tree = TreeGenerator4();
             tree.Tree.SetInfo(20);
             return tree;
@@ -1095,7 +1161,7 @@ namespace Final_Project_Corona
             grade += TestQ4(); // OK
             grade += TestQ5(); // not written yet 
             grade += TestQ6(); // OK
-            grade += TestQ7(); // in testing 
+            grade += TestQ7(); // OK 
             grade += TestQ8(); // not written yet 
             Console.WriteLine("***************FINISHED ALL TESTS******************");
             Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);

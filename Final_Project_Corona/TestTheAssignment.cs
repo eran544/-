@@ -175,6 +175,13 @@ namespace Final_Project_Corona
             Console.WriteLine("Test " + numTest + " started! sent:");
             Console.WriteLine("num1 = " + num1 + ", num2 = " + num2 + ", op = " + op);
         }
+        private static void FinishTaskMesseges(int num, double maxGrade, double grade)
+        {
+            EndQNum(num);
+            Recieved(maxGrade, grade);
+            PrintStarsAndPressEnter();
+            Console.ReadLine();
+        }
 
 
 
@@ -393,10 +400,7 @@ namespace Final_Project_Corona
                 arr2[i] = i * 21 - 3;
             }
             grade = GraderQ1(arr1, 1, 30, 23478) + GraderQ1(arr2, 2, 29, 23349);
-            EndQNum(1);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(1, maxGrade, grade);
             return grade;
         }
 
@@ -453,12 +457,7 @@ namespace Final_Project_Corona
             bool[] arr10 = { true, false, true, true };
             grade += GraderQ2(arr10, 10, false);
 
-
-
-            EndQNum(2);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(2, maxGrade, grade);
             return grade;
         }
         private static double GradeClassSofa(MySofa sent, int numTest)
@@ -623,10 +622,7 @@ namespace Final_Project_Corona
                 grade += SofaGenerator(i);
             }
 
-            EndQNum(3);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(3, maxGrade, grade);
             return grade;
         }
 
@@ -701,8 +697,11 @@ namespace Final_Project_Corona
             catch (Exception e)
             {
                 RecievedException(e);
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Since it recieved Exception in constrctor of HandWeight: No tests will be applied to this task");
-                return 0;
+                Console.ResetColor();
+                FinishTaskMesseges(4, maxGrade, grade);
+                return grade;
             }
             string expected0 = "<Left: 0, Right: 0>";
             string expected25 = "<Left: 2.5, Right: 2.5>";
@@ -719,10 +718,7 @@ namespace Final_Project_Corona
 
 
 
-            EndQNum(4);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(4, maxGrade, grade);
             return grade;
         }
         private static double TestQ5()
@@ -731,10 +727,7 @@ namespace Final_Project_Corona
             double maxGrade = 8;
             double grade = 0;
 
-            EndQNum(5);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(5, maxGrade, grade);
             return grade;
         }
 
@@ -947,10 +940,7 @@ namespace Final_Project_Corona
             for (int i = 1; i <= 5; i++)
                 grade += StackGenerator(i);
 
-            EndQNum(6);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(6, maxGrade, grade);
             return grade;
         }
 
@@ -1132,10 +1122,7 @@ namespace Final_Project_Corona
                     TestForNumAndLetter(7, 'b');
                 grade += TreeGenerator(i);
             }
-            EndQNum(7);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(7, maxGrade, grade);
             return grade;
         }
         private static double TestQ8()
@@ -1143,11 +1130,7 @@ namespace Final_Project_Corona
             BeginQNum(8);
             double maxGrade = 15;
             double grade = 0;
-
-            EndQNum(8);
-            Recieved(maxGrade, grade);
-            PrintStarsAndPressEnter();
-            Console.ReadLine();
+            FinishTaskMesseges(8, maxGrade, grade);
             return grade;
         }
 

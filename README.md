@@ -6,6 +6,10 @@ Students that chose to have internal grade in Computer science recived this assi
 Part 1: 60% of the grade - were tested by the script written in the file TestTheAssignment.cs. In other word ducument I will explain how this code works (in Hebrew)
 Part 2: 40% grade - testing the student in person (online - via Zoom) in which the student has to explain and answer questions regarding their code.
 
+The projects also includes my solution to the project.
+
+Here is the message (also written in TestTheAssignment.cs) for the student about my script of testing
+
 Instructions - Please read it:
 The purpose of this code is to check and test
 the correction of each task according to the

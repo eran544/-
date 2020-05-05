@@ -574,6 +574,8 @@ namespace Final_Project_Corona
             };
             MySofa[] result = { arr[1], arr[4], arr[5] };
             double budget = 2000;
+            //this case incorrect implementation such as looking for any 3 sofas
+            //still return the expected result
             return new SofaWithResults(arr, result, budget);
         }
 
@@ -590,7 +592,10 @@ namespace Final_Project_Corona
                 new MySofa("Hopping Sofa", "Australia", 456.78)
             };
             MySofa[] result = null;
-            double budget = 5400.29;
+            double budget = 4293.33;
+            //note: incorrect implemetation (looking for any 3 sofas
+            //instead of 3 different sofas) - will result 3 apologizing sofas
+            //and fail the test
             return new SofaWithResults(arr, result, budget);
         }
 
@@ -599,7 +604,7 @@ namespace Final_Project_Corona
             MySofa[] arr =
             {
                 new MySofa("My Precious Sofa", "Mordor", 2062.12),
-                new MySofa("Spider Sofa", "Springfield", 9091.98),
+                new MySofa("Spider Sofa", "Springfield", 5219.37),
                 new MySofa("Soofie Doobie Do", "Coolsville", 5284.59),
                 new MySofa("The Hunger Sofa", "12th district", 1166.33),
                 new MySofa("Dinosofa", "Jurassic Park", 4312.06),
@@ -610,6 +615,9 @@ namespace Final_Project_Corona
             };
             MySofa[] result = { arr[5], arr[6], arr[7] };
             double budget = 15658.11;
+            //note: incorrect implemetation (looking for any 3 sofas
+            //instead of 3 different sofas - will result 3 spider sofas
+            //and fail the test
             return new SofaWithResults(arr, result, budget);
         }
 
@@ -1362,14 +1370,14 @@ namespace Final_Project_Corona
         {
             double grade = 0;
             const int MAX_GRADE = 60;
-            //grade += TestQ1(); // OK
-            //grade += TestQ2(); // OK   
-            //grade += TestQ3(); // OK 
-            //grade += TestQ4(); // OK
-            grade += TestQ5(); // in-testing 
-            //grade += TestQ6(); // OK
-            //grade += TestQ7(); // OK 
-            //grade += TestQ8(); // not written yet 
+            grade += TestQ1(); // OK
+            grade += TestQ2(); // OK   
+            grade += TestQ3(); // OK 
+            grade += TestQ4(); // OK
+            grade += TestQ5(); // OK 
+            grade += TestQ6(); // OK
+            grade += TestQ7(); // OK 
+            grade += TestQ8(); // not written yet 
             Console.WriteLine("***************FINISHED ALL TESTS******************");
             Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);
             return grade;

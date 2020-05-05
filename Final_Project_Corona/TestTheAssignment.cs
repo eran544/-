@@ -226,6 +226,11 @@ namespace Final_Project_Corona
         {
             Console.WriteLine("Object Oriented Test Staretd - Begin: " + vehicle);
         }
+        private static void ObjectOrientedFinished(string vehicle, double grade, int maxGrade)
+        {
+            Console.WriteLine("Object Oriented Test for " + vehicle + " has ended!" +
+                "recieved "+grade+"/"+maxGrade);
+        }
         private static void FinishTaskMesseges(int num, double maxGrade, double grade)
         {
             EndQNum(num);
@@ -308,8 +313,7 @@ namespace Final_Project_Corona
             string output =
             "license Plate: " + bicycle.GetLicensePlate() + " num of seats: " + bicycle.GetNumOfSeats()
             + " num of wheels: " + bicycle.GetNumOfWheels() + " Owner: " + bicycle.GetOwner();
-            //missed Get for the precentage, I will call it when it will be the initialized value: 50
-            output += " current precentage: 50";
+            output += " current precentage: " + bicycle.GetCurrentPrecentage();
             return output;
         }
 
@@ -368,11 +372,23 @@ namespace Final_Project_Corona
             Console.WriteLine("The number that should have been printed (in cyan) is " + num);
             return YesOrNoCheck();
         }
+        private static bool ManualPrintCheck(Bicycle bicycle)
+        {
+            //I know I don't have to do this function again since bus inherit vehicle
+            //but it might fail our tests if student will not do as well
+            Console.WriteLine("Testing bicycle.Tostring() manually");
+            Console.WriteLine("Should print:\n" + StringifyBicycle(bicycle));
+            Console.WriteLine("Output is in Cyan");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(bicycle.ToString());
+            Console.ResetColor();
+            return YesOrNoCheck();
+        }
         private static bool ManualPrintCheck(Bus bus)
         {
-            //I know I don't have to do this function again since bus inherit car
+            //Again, I know I don't have to do this function again since bus inherit car
             //but it might fail our tests if student will not do as well
-            Console.WriteLine("Testiing bus.Tostring() manually");
+            Console.WriteLine("Testing bus.Tostring() manually");
             Console.WriteLine("Should print:\n" + StringifyBus(bus));
             Console.WriteLine("Output is in Cyan");
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -383,7 +399,7 @@ namespace Final_Project_Corona
 
         private static bool ManualPrintCheck(Car car)
         {
-            Console.WriteLine("Testiing car.Tostring() manually");
+            Console.WriteLine("Testing car.Tostring() manually");
             Console.WriteLine("Should print:\n" + StringifyCar(car));
             Console.WriteLine("Output is in Cyan");
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -1438,6 +1454,9 @@ namespace Final_Project_Corona
         }
 
         const double PRICE_PER_LITER = 4.9;
+        private const double MAX_PRECENTAGE = 100;
+        private const int PERCENTAGE_PER_KM = 5;
+        private const double PERCENTAGE_PER_MINUTE = 3;
         private static double TestCarGet(Car car, int liscencePlate, int numOfSeats, int numOfWheels, int capacity, int amount, string name)
         {
             int count = 0;
@@ -1488,6 +1507,104 @@ namespace Final_Project_Corona
             return count * VALUE;
 
         }
+        private static double TestBusGet(Bus bus, int liscencePlate, int numOfSeats, int numOfWheels, int capacity, int amount, string name, int busLine)
+        {
+            int count = 0;
+            const double VALUE = 0.15;
+            TestStarted("getters of car", 1);
+            for (int i = 0; i < 7; i++)
+            {
+                try
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            if (bus.GetLicensePlate() == liscencePlate) count++;
+                            break;
+                        case 1:
+                            if (bus.GetNumOfSeats() == numOfSeats) count++;
+                            break;
+                        case 2:
+                            if (bus.GetNumOfWheels() == numOfWheels) count++;
+                            break;
+                        case 3:
+                            if (bus.GetCapacity() == capacity) count++;
+                            break;
+                        case 4:
+                            if (bus.GetAmount() == amount) count++;
+                            break;
+                        case 5:
+                            if (bus.GetBusLine() == busLine) count++;
+                            break;
+                        default:
+                            if (bus.GetOwner() == name) count++;
+                            break;
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    RecievedException(e, "one of bicycle getters, please check");
+                    FailedWithExceptions(1);
+                    continue;
+                }
+            }
+            if (count == 7)
+            {
+                PassedTest(1, "getters of bicycle");
+            }
+            else
+            {
+                FailedWithoutException(1, "bicycle getters", "error in one or more getters");
+            }
+            return count * VALUE;
+        }
+        private static double TestBicycleGet(Bicycle bicycle, int liscencePlate, int numOfSeats, int numOfWheels, double currentPrecentage, string name)
+        {
+            int count = 0;
+            const double VALUE = 0.3;
+            TestStarted("getters of bicycle", 1);
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            if (bicycle.GetLicensePlate() == liscencePlate) count++;
+                            break;
+                        case 1:
+                            if (bicycle.GetNumOfSeats() == numOfSeats) count++;
+                            break;
+                        case 2:
+                            if (bicycle.GetNumOfWheels() == numOfWheels) count++;
+                            break;
+                        case 3:
+                            if (bicycle.GetCurrentPrecentage() == currentPrecentage) count++;
+                            break;
+                        default:
+                            if (bicycle.GetOwner() == name) count++;
+                            break;
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    RecievedException(e, "one of bicycle getters, please check");
+                    FailedWithExceptions(1);
+                    continue;
+                }
+            }
+            if (count == 5)
+            {
+                PassedTest(1, "getters of bicycle");
+            }
+            else
+            {
+                FailedWithoutException(1, "bicycle getters", "error in one or more getters");
+            }
+            return count * VALUE;
+        }
         private static double SellCarTest(Car car, string newName)
         {
             TestStarted("Sell Car", 2);
@@ -1513,9 +1630,84 @@ namespace Final_Project_Corona
                 return 0;
             }
         }
+        private static double SellBusTest(Bus bus, string newName)
+        {
+            TestStarted("Sell bus", 2);
+            string recieved;
+            try
+            {
+                bus.SellVehicle(newName);
+                recieved = bus.GetOwner();
+                FinishedWithoutException();
+                if (recieved == newName)
+                {
+                    PassedTest(2, newName);
+                    return 0.25;
+                }
+                FailedWithoutException(2, newName, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, newName);
+                FailedWithExceptions(2);
+                return 0;
+            }
+        }
+        private static double SellBicycleTest(Bicycle bicycle, string newName)
+        {
+            TestStarted("Sell bus", 2);
+            string recieved;
+            try
+            {
+                bicycle.SellVehicle(newName);
+                recieved = bicycle.GetOwner();
+                FinishedWithoutException();
+                if (recieved == newName)
+                {
+                    PassedTest(2, newName);
+                    return 0.5;
+                }
+                FailedWithoutException(2, newName, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, newName);
+                FailedWithExceptions(2);
+                return 0;
+            }
+        }
+        private static double ChangeLineTest(Bus bus, int newLine, int numTest)
+        {
+            TestStarted("Change busLine to " + newLine, numTest);
+            int recieved;
+            try
+            {
+                bus.ChangeBusLine(newLine);
+                recieved = bus.GetBusLine();
+                FinishedWithoutException();
+                if (recieved == newLine)
+                {
+                    PassedTest(numTest,newLine);
+                    return 0.5;
+                }
+                FailedWithoutException(numTest, newLine, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, newLine);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
         private static double SetAmountCar(Car car, double changedCapacity, double newAmount, double value, int numTest)
         {
-            TestStarted("Change capacity to " + changedCapacity, numTest);
+            TestStarted("Change capacity  in car to " + changedCapacity, numTest);
             double recieved;
             try
             {
@@ -1538,6 +1730,82 @@ namespace Final_Project_Corona
                 return 0;
             }
         }
+        private static double SetAmountBus(Bus bus, double changedCapacity, int newAmount, double value, int numTest)
+        {
+            TestStarted("Change capacity in bus to " + changedCapacity, numTest);
+            double recieved;
+            try
+            {
+                bus.SetAmount(changedCapacity);
+                recieved = bus.GetAmount();
+                FinishedWithoutException();
+                if (recieved == newAmount)
+                {
+                    PassedTest(numTest, (int)newAmount);
+                    return value;
+                }
+                FailedWithoutException(numTest, (int)newAmount, (int)recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, (int)newAmount);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+        private static double RideTest(Bicycle bicycle, int kmRode, double expected, double value, int numTest)
+        {
+            TestStarted("Ride() for " + kmRode + " km", numTest);
+            double recieved;
+            try
+            {
+                bicycle.Ride(kmRode);
+                recieved = bicycle.GetCurrentPrecentage();
+                FinishedWithoutException();
+                if (recieved == expected)
+                {
+                    PassedTest(numTest, expected);
+                    return value;
+                }
+                FailedWithoutException(numTest, expected, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+
+        private static double ChargeTest(Bicycle bicycle, int minCharged, double expected, double value, int numTest)
+        {
+            TestStarted("Charge() for " + minCharged + " minutes", numTest);
+            double recieved;
+            try
+            {
+                bicycle.Charge(minCharged);
+                recieved = bicycle.GetCurrentPrecentage();
+                FinishedWithoutException();
+                if (recieved == expected)
+                {
+                    PassedTest(numTest, expected);
+                    return value;
+                }
+                FailedWithoutException(numTest, expected, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
 
         private static double FuelUpTest(Car car, double priceForFuel, int numTest)
         {
@@ -1552,7 +1820,31 @@ namespace Final_Project_Corona
                     PassedTest(numTest, priceForFuel);
                     return 1.5;
                 }
-                FailedWithoutException(numTest, priceForFuel, (int)recieved);
+                FailedWithoutException(numTest, priceForFuel, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, priceForFuel);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+        private static double FuelUpTestBus(Bus bus, double priceForFuel, int numTest)
+        {
+            TestStarted("FuelUp() bus", numTest);
+            double recieved;
+            try
+            {
+                recieved = bus.FuelUp();
+                FinishedWithoutException();
+                if (recieved == priceForFuel)
+                {
+                    PassedTest(numTest, priceForFuel);
+                    return 1.5;
+                }
+                FailedWithoutException(numTest, priceForFuel, recieved);
                 return 0;
 
             }
@@ -1588,10 +1880,35 @@ namespace Final_Project_Corona
                 return 0;
             }
         }
+        private static double CheckCapacityBus(Bus bus, int expected, int numTest)
+        {
+            TestStarted("Check amount after FuelUp() bus", numTest);
+            double recieved;
+            try
+            {
+                recieved = bus.GetAmount();
+                FinishedWithoutException();
+                if (recieved == expected)
+                {
+                    PassedTest(numTest, expected);
+                    return 0.5;
+                }
+                FailedWithoutException(numTest, expected, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
 
         private static double CarGrader()
         {
             double grade = 0;
+            int maxGrade = 5;
             ObjectOrientedStarted("Car");
             int liscencePlate = 123, numOfSeats = 5, numOfWheels = 4, capacity = 40, amount = 0;
             string name = "Yankale";
@@ -1626,6 +1943,7 @@ namespace Final_Project_Corona
             grade += FuelUpTest(car, priceForFuel, 6);
             //check that amount == capacity at the end for 0.5 points - max 5 points
             grade += CheckCapacity(car, capacity, 7);
+            ObjectOrientedFinished("Car", grade, maxGrade);
             return grade;
 
         }
@@ -1633,8 +1951,9 @@ namespace Final_Project_Corona
         private static double BusGrader()
         {
             double grade = 0;
+            int maxGrade = 5;
             ObjectOrientedStarted("Bus");
-            int liscencePlate = 123, numOfSeats = 5, numOfWheels = 4, capacity = 40, amount = 0, busLine = 8;
+            int liscencePlate = 456, numOfSeats = 50, numOfWheels = 8, capacity = 100, amount = 0, busLine = 8;
             string name = "Dan Beersheva";
 
             Bus bus;
@@ -1647,41 +1966,88 @@ namespace Final_Project_Corona
                 RecievedException(e, "bus constructor");
                 return 0;
             }
-            //up to 1.5
-            grade += TestCarGet(bus, liscencePlate, numOfSeats, numOfWheels, capacity, amount, name);
-            //max: 1.8
+            //up to 1.05
+            grade += TestBusGet(bus, liscencePlate, numOfSeats, numOfWheels, capacity, amount, name, busLine);
+            //max: 1.25
             if (ManualPrintCheck(bus))
-                grade += 0.3;
-            string newName = "Yoskale";
-            int newAmount = 5;
-            //max: 2
-            grade += SellCarTest(bus, newName);
-            //SetAmount 3 times - this one is way over capacity - total - 3
-            grade += SetAmountCar(bus, capacity * 2, amount, 0.4, 3);
+                grade += 0.2;
+            string newName = "Metropoline";
+            int newAmount = 20;
+            //max: 1.5
+            grade += SellBusTest(bus, newName);
+            int newLine = 370;
+            //for 0.5 point - max 2
+            grade += ChangeLineTest(bus, newLine, 3);
+            //SetAmount 3 times - this one is way over capacity - max for all 3 is 3
+            grade += SetAmountBus(bus, capacity * 2, amount, 0.4, 4);
             //this one is with negative capacity
-            grade += SetAmountCar(bus, capacity * -1, amount, 0.4, 4);
+            grade += SetAmountBus(bus, capacity * -1, amount, 0.4, 5);
             //this one should work
-            grade += SetAmountCar(bus, newAmount, newAmount, 0.2, 5);
+            grade += SetAmountBus(bus, newAmount, newAmount, 0.2, 6);
             //fuelUp() for 1.5 points - max 4.5
             double priceForFuel = (capacity - newAmount) * PRICE_PER_LITER;
-            grade += FuelUpTest(bus, priceForFuel, 6);
+            grade += FuelUpTestBus(bus, priceForFuel, 7);
             //check that amount == capacity at the end for 0.5 points - max 5 points
-            grade += CheckCapacity(bus, capacity, 7);
+            grade += CheckCapacityBus(bus, capacity, 8);
+            ObjectOrientedFinished("Bus", grade, maxGrade);
             return grade;
         }
 
+
         private static double BicycleGrader()
         {
-            throw new NotImplementedException();
+            double grade = 0;
+            int maxGrade = 5;
+            ObjectOrientedStarted("Bicycle");
+            int liscencePlate = 789, numOfSeats = 1, numOfWheels = 2;
+            double currentPrecentage = 50;
+            string name = "Moishe";
+
+            Bicycle bicycle;
+            try
+            {
+                bicycle = new Bicycle(liscencePlate, numOfSeats, numOfWheels, name);
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, "bus constructor");
+                return 0;
+            }
+            //up to 1.5
+            grade += TestBicycleGet(bicycle, liscencePlate, numOfSeats, numOfWheels, currentPrecentage, name);
+            //max: 2
+            if (ManualPrintCheck(bicycle))
+                grade += 0.5;
+            string newName = "Ronkiflitz";
+            int kmRode = 8;
+            double newPrecentage = currentPrecentage - kmRode * PERCENTAGE_PER_KM; //should be 10%
+            int minCharged = 27;//should chrarge to 91%
+            //riding and charging not until the end - 0.5 each
+            grade += SellBicycleTest(bicycle, newName);
+            grade += RideTest(bicycle, kmRode, newPrecentage, 0.5, 3);
+            newPrecentage = newPrecentage + minCharged * PERCENTAGE_PER_MINUTE;//should be 91
+            grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.5, 4);
+            //riding more then possible, if he has 90% he can ride 18km
+            //each rida and charge - 0.75 point
+            kmRode = 20;
+            newPrecentage = 0;
+            grade += RideTest(bicycle, kmRode, newPrecentage, 0.75, 5);
+            //charging for 33.33 minutes should supply 100%
+            minCharged = 60;
+            newPrecentage = MAX_PRECENTAGE;
+            grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.75, 6);
+            ObjectOrientedFinished("Bus", grade, maxGrade);
+            return grade;
         }
+
         private static double TestQ8()
         {
             BeginQNum(8);
             double maxGrade = 15;
             double grade = 0;
             grade += CarGrader();
-            //grade += BicycleGrader();
-            //grade += BusGrader();
+            grade += BusGrader();
+            grade += BicycleGrader();
             FinishTaskMesseges(8, maxGrade, grade);
             return grade;
         }
@@ -1691,14 +2057,14 @@ namespace Final_Project_Corona
         {
             double grade = 0;
             const int MAX_GRADE = 60;
-            //grade += TestQ1(); // OK
-            //grade += TestQ2(); // OK   
-            //grade += TestQ3(); // OK 
-            //grade += TestQ4(); // OK
-            //grade += TestQ5(); // OK 
-            //grade += TestQ6(); // OK
-            //grade += TestQ7(); // OK 
-            grade += TestQ8(); // in-testing 
+            grade += TestQ1(); // OK
+            grade += TestQ2(); // OK   
+            grade += TestQ3(); // OK 
+            grade += TestQ4(); // OK
+            grade += TestQ5(); // OK 
+            grade += TestQ6(); // OK
+            grade += TestQ7(); // OK 
+            grade += TestQ8(); // OK 
             Console.WriteLine("***************FINISHED ALL TESTS******************");
             Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);
             return grade;

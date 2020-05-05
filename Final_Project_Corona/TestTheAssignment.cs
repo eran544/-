@@ -170,7 +170,7 @@ namespace Final_Project_Corona
         }
         private static void RecievedExceptionAtConstructor(Exception e, string where)
         {
-            RecievedException(e, "Constrctor of Twin list");
+            RecievedException(e, "Constrctor of " + where);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Since it recieved Exception in constrctor of " + where + ":" +
                 " No tests will be applied to this case");
@@ -224,7 +224,7 @@ namespace Final_Project_Corona
         }
         private static void ObjectOrientedStarted(string vehicle)
         {
-            Console.WriteLine("Object Oriented Test Staretd - Begin: " + vehicle);
+            Console.WriteLine("Object Oriented Test Started - Begin: " + vehicle);
         }
         private static void ObjectOrientedFinished(string vehicle, double grade, int maxGrade)
         {
@@ -1920,7 +1920,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e, "Car constructor");
+                RecievedExceptionAtConstructor(e, "Car");
                 return 0;
             }
             //up to 1.5
@@ -1963,7 +1963,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e, "bus constructor");
+                RecievedExceptionAtConstructor(e, "Bus");
                 return 0;
             }
             //up to 1.05
@@ -2010,7 +2010,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e, "bus constructor");
+                RecievedExceptionAtConstructor(e, "Bicycle");
                 return 0;
             }
             //up to 1.5

@@ -2025,7 +2025,7 @@ namespace Final_Project_Corona
             //riding and charging not until the end - 0.5 each
             grade += SellBicycleTest(bicycle, newName);
             grade += RideTest(bicycle, kmRode, newPrecentage, 0.5, 3);
-            newPrecentage = newPrecentage + minCharged * PERCENTAGE_PER_MINUTE;//should be 91
+            newPrecentage += minCharged * PERCENTAGE_PER_MINUTE;//should be 91
             grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.5, 4);
             //riding more then possible, if he has 90% he can ride 18km
             //each rida and charge - 0.75 point

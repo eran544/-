@@ -89,6 +89,7 @@ namespace Final_Project_Corona
             st = bicycle.GetOwner();
             bicycle.Ride(5);
             bicycle.Charge(5);
+            num = bicycle.GetCurrentPrecentage();
             st = stamCar.ToString();
 
             //Bus

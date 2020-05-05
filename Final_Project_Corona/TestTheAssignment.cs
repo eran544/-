@@ -1657,7 +1657,7 @@ namespace Final_Project_Corona
         }
         private static double SellBicycleTest(Bicycle bicycle, string newName)
         {
-            TestStarted("Sell bus", 2);
+            TestStarted("Sell bicycle", 2);
             string recieved;
             try
             {
@@ -2027,8 +2027,8 @@ namespace Final_Project_Corona
             grade += RideTest(bicycle, kmRode, newPrecentage, 0.5, 3);
             newPrecentage += minCharged * PERCENTAGE_PER_MINUTE;//should be 91
             grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.5, 4);
-            //riding more then possible, if he has 90% he can ride 18km
-            //each rida and charge - 0.75 point
+            //riding more then possible, if they have 91% they can ride 18km
+            //each ride and charge - 0.75 point
             kmRode = 20;
             newPrecentage = 0;
             grade += RideTest(bicycle, kmRode, newPrecentage, 0.75, 5);

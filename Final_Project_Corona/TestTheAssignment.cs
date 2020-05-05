@@ -34,7 +34,7 @@ namespace Final_Project_Corona
         * Copyright: Eran Salomon, Mekif Vav School, Beersheva, Israel.
         * Date: April - May 2020
         */
-        
+
 
 
 
@@ -86,6 +86,12 @@ namespace Final_Project_Corona
             Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + expected);
             Console.ResetColor();
         }
+        private static void PassedTest(int numTest, double expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + expected);
+            Console.ResetColor();
+        }
         private static void FinishedWithoutException()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -111,6 +117,13 @@ namespace Final_Project_Corona
             Console.WriteLine("Failed test " + numTest + " expected: " + expected + ", but recieved: " + recieved);
             Console.ResetColor();
         }
+        private static void FailedWithoutException(int numTest, double expected, double recieved)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Failed test " + numTest + " expected: " + expected + ", but recieved: " + recieved);
+            Console.ResetColor();
+        }
+        /*
         private static void RecievedException(Exception e)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -118,6 +131,7 @@ namespace Final_Project_Corona
             Console.ResetColor();
 
         }
+        */
         private static void RecievedException(Exception e, MySofa expected)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -146,6 +160,20 @@ namespace Final_Project_Corona
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Expected: " + ArrToString(expected) + " but recieved Exception: " + e.Message);
+            Console.ResetColor();
+        }
+        private static void RecievedException(Exception e, double expected)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
+            Console.ResetColor();
+        }
+        private static void RecievedExceptionAtConstructor(Exception e, string where)
+        {
+            RecievedException(e, "Constrctor of Twin list");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Since it recieved Exception in constrctor of " + where + ":" +
+                " No tests will be applied to this case");
             Console.ResetColor();
         }
 
@@ -191,8 +219,12 @@ namespace Final_Project_Corona
                 " Testing GetOdd. Sent: " + twinList.Node.ToString(),
                 SWTCH => "Test " + numTest + " started!" +
                 " Testing SwitchChain. Sent: " + twinList.Node.ToString(),
-                _ =>  throw new NotSupportedException("This should not happen in TestStarted TwinList"),
+                _ => throw new NotSupportedException("This should not happen in TestStarted TwinList"),
             };
+        }
+        private static void ObjectOrientedStarted(string vehicle)
+        {
+            Console.WriteLine("Object Oriented Test Staretd - Begin: " + vehicle);
         }
         private static void FinishTaskMesseges(int num, double maxGrade, double grade)
         {
@@ -253,6 +285,33 @@ namespace Final_Project_Corona
         {
             return "<Model: \"" + sofa.Model + "\", Country: \"" + sofa.Country + "\", Price = " + sofa.Price + ">";
         }
+        private static string StringifyCar(Car car)
+        {
+            string output =
+            "license Plate: " + car.GetLicensePlate() + " num of seats: " + car.GetNumOfSeats()
+            + " num of wheels: " + car.GetNumOfWheels() + " Owner: " + car.GetOwner();
+            output += " missing for full capacity: " + (car.GetCapacity() - car.GetAmount());
+            return output;
+
+        }
+        private static string StringifyBus(Bus bus)
+        {
+            string output =
+            "license Plate: " + bus.GetLicensePlate() + " num of seats: " + bus.GetNumOfSeats()
+            + " num of wheels: " + bus.GetNumOfWheels() + " Owner: " + bus.GetOwner();
+            output += " missing for full capacity: " + (bus.GetCapacity() - bus.GetAmount());
+            output += " bus line: " + bus.GetBusLine();
+            return output;
+        }
+        private static string StringifyBicycle(Bicycle bicycle)
+        {
+            string output =
+            "license Plate: " + bicycle.GetLicensePlate() + " num of seats: " + bicycle.GetNumOfSeats()
+            + " num of wheels: " + bicycle.GetNumOfWheels() + " Owner: " + bicycle.GetOwner();
+            //missed Get for the precentage, I will call it when it will be the initialized value: 50
+            output += " current precentage: 50";
+            return output;
+        }
 
         private static bool CompareToString(string s1, string s2)
         {
@@ -282,11 +341,9 @@ namespace Final_Project_Corona
             return (head1 == null && head2 == null);
         }
 
-        //this methods recieved input whether the printing was correct
-        private static bool ManualPrintCheck(int num)
+        private static bool YesOrNoCheck()
         {
-            Console.WriteLine("The number that should have been printed (in cyan) is " + num);
-            Console.WriteLine("Is this number correct? y/n");
+            Console.WriteLine("Is this printing correct? y/n");
             char c = ' ';
             while (c != 'y' && c != 'n')
             {
@@ -303,6 +360,36 @@ namespace Final_Project_Corona
                 }
             }
             return c == 'y';
+        }
+
+        //this methods recieved input whether the printing was correct
+        private static bool ManualPrintCheck(int num)
+        {
+            Console.WriteLine("The number that should have been printed (in cyan) is " + num);
+            return YesOrNoCheck();
+        }
+        private static bool ManualPrintCheck(Bus bus)
+        {
+            //I know I don't have to do this function again since bus inherit car
+            //but it might fail our tests if student will not do as well
+            Console.WriteLine("Testiing bus.Tostring() manually");
+            Console.WriteLine("Should print:\n" + StringifyBus(bus));
+            Console.WriteLine("Output is in Cyan");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(bus.ToString());
+            Console.ResetColor();
+            return YesOrNoCheck();
+        }
+
+        private static bool ManualPrintCheck(Car car)
+        {
+            Console.WriteLine("Testiing car.Tostring() manually");
+            Console.WriteLine("Should print:\n" + StringifyCar(car));
+            Console.WriteLine("Output is in Cyan");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(car.ToString());
+            Console.ResetColor();            
+            return YesOrNoCheck();
         }
 
         //methods that presents arrays as strings
@@ -370,7 +457,7 @@ namespace Final_Project_Corona
                 {
                     grade += 1;
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Passed Test " + numTest + "a. Expected result was " +expected);
+                    Console.WriteLine("Passed Test " + numTest + "a. Expected result was " + expected);
                     Console.ResetColor();
                 }
                 else
@@ -724,11 +811,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Since it recieved Exception in constrctor of HandWeight:" +
-                    " No tests will be applied to this task");
-                Console.ResetColor();
+                RecievedExceptionAtConstructor(e, "HandWeight");
                 FinishTaskMesseges(4, maxGrade, grade);
                 return grade;
             }
@@ -764,7 +847,7 @@ namespace Final_Project_Corona
                     PassedTest(numTest, expected.ToString());
                     return 0.6;
                 }
-                FailedWithoutException(numTest,expected.ToString(), recieved.ToString());
+                FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
                 return 0;
 
             }
@@ -929,11 +1012,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e, "Constrctor of Twin list");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Since it recieved Exception in constrctor of TwinList:" +
-                    " No tests will be applied to this case");
-                Console.ResetColor();
+                RecievedExceptionAtConstructor(e, "TwinList");
             }
             // I have no idea why I have to assign again,
             // but without it I get compilation error, weird...
@@ -942,7 +1021,7 @@ namespace Final_Project_Corona
             if (num == 1)
                 num = 0;
             else num = 4;
-            for (int i=1; i<=4; i++)
+            for (int i = 1; i <= 4; i++)
             {
                 grade += TwinListGrader(result, twinList, i, i + num);
             }
@@ -1336,7 +1415,7 @@ namespace Final_Project_Corona
                 8 => TreeGenerator8(),
                 _ => throw new NotSupportedException("This should not happen in TreeGenerator"),
             };
-            if (num <=4)
+            if (num <= 4)
                 return Q7aGrader(result.Tree, result.Result, num);
             return Q7bGrader(result.Tree, result.Result, num);
         }
@@ -1357,27 +1436,269 @@ namespace Final_Project_Corona
             FinishTaskMesseges(7, maxGrade, grade);
             return grade;
         }
+
+        const double PRICE_PER_LITER = 4.9;
+        private static double TestCarGet(Car car, int liscencePlate, int numOfSeats, int numOfWheels, int capacity, int amount, string name)
+        {
+            int count = 0;
+            const double VALUE = 0.25;
+            TestStarted("getters of car", 1);
+            for (int i = 0; i < 6; i++)
+            {
+                try
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            if (car.GetLicensePlate() == liscencePlate) count++;
+                            break;
+                        case 1:
+                            if (car.GetNumOfSeats() == numOfSeats) count++;
+                            break;
+                        case 2:
+                            if (car.GetNumOfWheels() == numOfWheels) count++;
+                            break;
+                        case 3:
+                            if (car.GetCapacity() == capacity) count++;
+                            break;
+                        case 4:
+                            if (car.GetAmount() == amount) count++;
+                            break;
+                        default:
+                            if (car.GetOwner() == name) count++;
+                            break;
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    RecievedException(e, "one of car getters, please check");
+                    FailedWithExceptions(1);
+                    continue;
+                }
+            }
+            if (count == 6)
+            {
+                PassedTest(1, "getters of car");
+            }
+            else
+            {
+                FailedWithoutException(1, "car getters", "error in one or more getters");
+            }
+            return count * VALUE;
+
+        }
+        private static double SellCarTest(Car car, string newName)
+        {
+            TestStarted("Sell Car", 2);
+            string recieved;
+            try
+            {
+                car.SellVehicle(newName);
+                recieved = car.GetOwner();
+                FinishedWithoutException();
+                if (recieved == newName)
+                {
+                    PassedTest(2, newName);
+                    return 0.2;
+                }
+                FailedWithoutException(2, newName, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, newName);
+                FailedWithExceptions(2);
+                return 0;
+            }
+        }
+        private static double SetAmountCar(Car car, double changedCapacity, double newAmount, double value, int numTest)
+        {
+            TestStarted("Change capacity to " + changedCapacity, numTest);
+            double recieved;
+            try
+            {
+                car.SetAmount(changedCapacity);
+                recieved = car.GetAmount();
+                FinishedWithoutException();
+                if (recieved == newAmount)
+                {
+                    PassedTest(numTest, (int)newAmount);
+                    return value;
+                }
+                FailedWithoutException(numTest, (int)newAmount, (int)recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, (int)newAmount);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+
+        private static double FuelUpTest(Car car, double priceForFuel, int numTest)
+        {
+            TestStarted("FuelUp() car", numTest);
+            double recieved;
+            try
+            {
+                recieved = car.FuelUp();
+                FinishedWithoutException();
+                if (recieved == priceForFuel)
+                {
+                    PassedTest(numTest, priceForFuel);
+                    return 1.5;
+                }
+                FailedWithoutException(numTest, priceForFuel, (int)recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, priceForFuel);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+
+        private static double CheckCapacity(Car car, double expected, int numTest)
+        {
+            TestStarted("Check amount after FuelUp() car", numTest);
+            double recieved;
+            try
+            {
+                recieved = car.GetAmount();
+                FinishedWithoutException();
+                if (recieved == expected)
+                {
+                    PassedTest(numTest, expected);
+                    return 0.5;
+                }
+                FailedWithoutException(numTest, expected, recieved);
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected);
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+
+        private static double CarGrader()
+        {
+            double grade = 0;
+            ObjectOrientedStarted("Car");
+            int liscencePlate = 123, numOfSeats = 5, numOfWheels = 4, capacity = 40, amount = 0;
+            string name = "Yankale";
+
+            Car car;
+            try
+            {
+                car = new Car(liscencePlate, numOfSeats, numOfWheels, name, capacity);
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, "Car constructor");
+                return 0;
+            }
+            //up to 1.5
+            grade += TestCarGet(car, liscencePlate, numOfSeats, numOfWheels, capacity, amount, name);
+            //max: 1.8
+            if (ManualPrintCheck(car))
+                grade += 0.3;
+            string newName = "Yoskale";
+            int newAmount = 5;
+            //max: 2
+            grade += SellCarTest(car, newName);
+            //SetAmount 3 times - this one is way over capacity - total - 3
+            grade += SetAmountCar(car, capacity * 2, amount, 0.4, 3);
+            //this one is with negative capacity
+            grade += SetAmountCar(car, capacity * -1, amount, 0.4, 4);
+            //this one should work
+            grade += SetAmountCar(car, newAmount, newAmount, 0.2, 5);
+            //fuelUp() for 1.5 points - max 4.5
+            double priceForFuel = (capacity - newAmount) * PRICE_PER_LITER;
+            grade += FuelUpTest(car, priceForFuel, 6);
+            //check that amount == capacity at the end for 0.5 points - max 5 points
+            grade += CheckCapacity(car, capacity, 7);
+            return grade;
+
+        }
+
+        private static double BusGrader()
+        {
+            double grade = 0;
+            ObjectOrientedStarted("Bus");
+            int liscencePlate = 123, numOfSeats = 5, numOfWheels = 4, capacity = 40, amount = 0, busLine = 8;
+            string name = "Dan Beersheva";
+
+            Bus bus;
+            try
+            {
+                bus = new Bus(liscencePlate, numOfSeats, numOfWheels, name, capacity, busLine);
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, "bus constructor");
+                return 0;
+            }
+            //up to 1.5
+            grade += TestCarGet(bus, liscencePlate, numOfSeats, numOfWheels, capacity, amount, name);
+            //max: 1.8
+            if (ManualPrintCheck(bus))
+                grade += 0.3;
+            string newName = "Yoskale";
+            int newAmount = 5;
+            //max: 2
+            grade += SellCarTest(bus, newName);
+            //SetAmount 3 times - this one is way over capacity - total - 3
+            grade += SetAmountCar(bus, capacity * 2, amount, 0.4, 3);
+            //this one is with negative capacity
+            grade += SetAmountCar(bus, capacity * -1, amount, 0.4, 4);
+            //this one should work
+            grade += SetAmountCar(bus, newAmount, newAmount, 0.2, 5);
+            //fuelUp() for 1.5 points - max 4.5
+            double priceForFuel = (capacity - newAmount) * PRICE_PER_LITER;
+            grade += FuelUpTest(bus, priceForFuel, 6);
+            //check that amount == capacity at the end for 0.5 points - max 5 points
+            grade += CheckCapacity(bus, capacity, 7);
+            return grade;
+        }
+
+        private static double BicycleGrader()
+        {
+            throw new NotImplementedException();
+        }
         private static double TestQ8()
         {
             BeginQNum(8);
             double maxGrade = 15;
             double grade = 0;
+            grade += CarGrader();
+            //grade += BicycleGrader();
+            //grade += BusGrader();
             FinishTaskMesseges(8, maxGrade, grade);
             return grade;
         }
+
 
         public static double StartTest()
         {
             double grade = 0;
             const int MAX_GRADE = 60;
-            grade += TestQ1(); // OK
-            grade += TestQ2(); // OK   
-            grade += TestQ3(); // OK 
-            grade += TestQ4(); // OK
-            grade += TestQ5(); // OK 
-            grade += TestQ6(); // OK
-            grade += TestQ7(); // OK 
-            grade += TestQ8(); // not written yet 
+            //grade += TestQ1(); // OK
+            //grade += TestQ2(); // OK   
+            //grade += TestQ3(); // OK 
+            //grade += TestQ4(); // OK
+            //grade += TestQ5(); // OK 
+            //grade += TestQ6(); // OK
+            //grade += TestQ7(); // OK 
+            grade += TestQ8(); // in-testing 
             Console.WriteLine("***************FINISHED ALL TESTS******************");
             Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);
             return grade;
@@ -1419,7 +1740,7 @@ namespace Final_Project_Corona
     class TwinListWithResult
     {
         //Data structure to hold all the outputs of TwinList
-        public TwinListWithResult(Node<int> node, Node<int> odd, 
+        public TwinListWithResult(Node<int> node, Node<int> odd,
             Node<int> even, Node<int> swtch)
         {
             Node = node;

@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+Final_Project_Corona/.vscode/launch.json
+*.json

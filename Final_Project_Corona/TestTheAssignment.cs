@@ -175,6 +175,25 @@ namespace Final_Project_Corona
             Console.WriteLine("Test " + numTest + " started! sent:");
             Console.WriteLine("num1 = " + num1 + ", num2 = " + num2 + ", op = " + op);
         }
+        const int GET_CHAIN = 1;
+        const int GET_EVEN = 2;
+        const int GET_ODD = 3;
+        const int SWTCH = 4;
+        private static string TestStarted(TwinListWithResult twinList, int numTest, int type)
+        {
+            return type switch
+            {
+                GET_CHAIN => "Test " + numTest + " started!" +
+                " Testing GetChain. Sent: " + twinList.Node.ToString(),
+                GET_EVEN => "Test " + numTest + " started!" +
+                " Testing GetEven. Sent: " + twinList.Node.ToString(),
+                GET_ODD => "Test " + numTest + " started!" +
+                " Testing GetOdd. Sent: " + twinList.Node.ToString(),
+                SWTCH => "Test " + numTest + " started!" +
+                " Testing SwitchChain. Sent: " + twinList.Node.ToString(),
+                _ =>  throw new NotSupportedException("This should not happen in TestStarted TwinList"),
+            };
+        }
         private static void FinishTaskMesseges(int num, double maxGrade, double grade)
         {
             EndQNum(num);
@@ -597,6 +616,7 @@ namespace Final_Project_Corona
         private static double SofaGenerator(int num)
         {
             //this works only with VS 2019
+            //replaced from switch statement to switch expression
             SofaWithResults result = num switch
             {
                 1 => SofaGenerator1(),
@@ -698,7 +718,8 @@ namespace Final_Project_Corona
             {
                 RecievedException(e);
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Since it recieved Exception in constrctor of HandWeight: No tests will be applied to this task");
+                Console.WriteLine("Since it recieved Exception in constrctor of HandWeight:" +
+                    " No tests will be applied to this task");
                 Console.ResetColor();
                 FinishTaskMesseges(4, maxGrade, grade);
                 return grade;
@@ -721,11 +742,212 @@ namespace Final_Project_Corona
             FinishTaskMesseges(4, maxGrade, grade);
             return grade;
         }
+
+        private static double GetChainGrader(TwinListWithResult MyTwinList, TwinList result, int numTest)
+        {
+            Console.WriteLine(TestStarted(MyTwinList, numTest, GET_CHAIN));
+            Node<int> expected = MyTwinList.Node;
+            try
+            {
+                Node<int> recieved = result.GetChain();
+                FinishedWithoutException();
+                if (CompareNodes(expected, recieved))
+                {
+                    PassedTest(numTest, expected.ToString());
+                    return 0.6;
+                }
+                FailedWithoutException(numTest,expected.ToString(), recieved.ToString());
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected.ToString());
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+        private static double GetOddGrader(TwinListWithResult MyTwinList, TwinList result, int numTest)
+        {
+            Console.WriteLine(TestStarted(MyTwinList, numTest, GET_ODD));
+            Node<int> expected = MyTwinList.Odd;
+            try
+            {
+                Node<int> recieved = result.GetOdd();
+                FinishedWithoutException();
+                if (CompareNodes(expected, recieved))
+                {
+                    PassedTest(numTest, expected.ToString());
+                    return 1;
+                }
+                FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected.ToString());
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+        private static double GetEvenGrader(TwinListWithResult MyTwinList, TwinList result, int numTest)
+        {
+            Console.WriteLine(TestStarted(MyTwinList, numTest, GET_EVEN));
+            Node<int> expected = MyTwinList.Even;
+            try
+            {
+                Node<int> recieved = result.GetEven();
+                FinishedWithoutException();
+                if (CompareNodes(expected, recieved))
+                {
+                    PassedTest(numTest, expected.ToString());
+                    return 1;
+                }
+                FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected.ToString());
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+        private static double SwitchChainGrader(TwinListWithResult MyTwinList, TwinList result, int numTest)
+        {
+            Console.WriteLine(TestStarted(MyTwinList, numTest, SWTCH));
+            Node<int> expected = MyTwinList.Swtch;
+            try
+            {
+                Node<int> recieved = result.SwitchChain();
+                FinishedWithoutException();
+                if (CompareNodes(expected, recieved))
+                {
+                    PassedTest(numTest, expected.ToString());
+                    return 1.4;
+                }
+                FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
+                return 0;
+
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, expected.ToString());
+                FailedWithExceptions(numTest);
+                return 0;
+            }
+        }
+
+        private static double TwinListGrader(TwinListWithResult twinList, TwinList result, int type, int numTest)
+        {
+            return type switch
+            {
+                GET_CHAIN => GetChainGrader(twinList, result, numTest),
+                GET_EVEN => GetEvenGrader(twinList, result, numTest),
+                GET_ODD => GetOddGrader(twinList, result, numTest),
+                SWTCH => SwitchChainGrader(twinList, result, numTest),
+                _ => throw new NotSupportedException("This should not happen in TwinListGrader"),
+            };
+        }
+
+        private static TwinListWithResult TwinListGenerator1()
+        {
+            //0 -> 1 -> 2 -> 3 -> 4
+            Node<int> mainNode = new Node<int>(0);
+            mainNode.SetNext(new Node<int>(1));
+            mainNode.GetNext().SetNext(new Node<int>(2));
+            mainNode.GetNext().GetNext().SetNext(new Node<int>(3));
+            mainNode.GetNext().GetNext().GetNext().SetNext(new Node<int>(4));
+            //even: 0 -> 2 -> 4
+            Node<int> evenNode = new Node<int>(0);
+            evenNode.SetNext(new Node<int>(2));
+            evenNode.GetNext().SetNext(new Node<int>(4));
+            //odd: 1 -> 3
+            Node<int> oddNode = new Node<int>(1);
+            oddNode.SetNext(new Node<int>(3));
+
+            //switch: 1 -> 0 -> 3 -> 2 -> 4
+            Node<int> switchNode = new Node<int>(1);
+            switchNode.SetNext(new Node<int>(0));
+            switchNode.GetNext().SetNext(new Node<int>(3));
+            switchNode.GetNext().GetNext().SetNext(new Node<int>(2));
+            switchNode.GetNext().GetNext().GetNext().SetNext(new Node<int>(4));
+
+            return new TwinListWithResult(mainNode, oddNode, evenNode, switchNode);
+
+
+        }
+        private static TwinListWithResult TwinListGenerator2()
+        {
+            //0 -> 1 -> 2 -> 3
+            Node<int> mainNode = new Node<int>(0);
+            mainNode.SetNext(new Node<int>(1));
+            mainNode.GetNext().SetNext(new Node<int>(2));
+            mainNode.GetNext().GetNext().SetNext(new Node<int>(3));
+
+            //even: 0 -> 2
+            Node<int> evenNode = new Node<int>(0);
+            evenNode.SetNext(new Node<int>(2));
+
+            //odd: 1 -> 3
+            Node<int> oddNode = new Node<int>(1);
+            oddNode.SetNext(new Node<int>(3));
+
+            //switch: 1 -> 0 -> 3 -> 2
+            Node<int> switchNode = new Node<int>(1);
+            switchNode.SetNext(new Node<int>(0));
+            switchNode.GetNext().SetNext(new Node<int>(3));
+            switchNode.GetNext().GetNext().SetNext(new Node<int>(2));
+
+            return new TwinListWithResult(mainNode, oddNode, evenNode, switchNode);
+        }
+
+
+        private static double TwinListGenerator(int num)
+        {
+            TwinListWithResult result = num switch
+            {
+                1 => TwinListGenerator1(),
+                2 => TwinListGenerator2(),
+                _ => throw new NotSupportedException("This should not happen in TwinListGenerator"),
+            };
+            double grade = 0;
+            TwinList twinList;
+            try
+            {
+                twinList = new TwinList(result.Node);
+            }
+            catch (Exception e)
+            {
+                RecievedException(e, "Constrctor of Twin list");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Since it recieved Exception in constrctor of TwinList:" +
+                    " No tests will be applied to this case");
+                Console.ResetColor();
+            }
+            // I have no idea why I have to assign again,
+            // but without it I get compilation error, weird...
+            // even weirder - it didn't happen with handweight
+            twinList = new TwinList(result.Node);
+            if (num == 1)
+                num = 0;
+            else num = 4;
+            for (int i=1; i<=4; i++)
+            {
+                grade += TwinListGrader(result, twinList, i, i + num);
+            }
+            return grade;
+        }
+
         private static double TestQ5()
         {
             BeginQNum(5);
             double maxGrade = 8;
             double grade = 0;
+            grade += TwinListGenerator(1);
+            grade += TwinListGenerator(2);
 
             FinishTaskMesseges(5, maxGrade, grade);
             return grade;
@@ -903,6 +1125,7 @@ namespace Final_Project_Corona
         private static double StackGenerator(int num)
         {
             //this works only with VS 2019
+            //replaced from switch statement to switch expression
             StackWithResult result = num switch
             {
                 1 => StackGenerator1(),
@@ -1092,6 +1315,7 @@ namespace Final_Project_Corona
         private static double TreeGenerator(int num)
         {
             //this works only with VS 2019
+            //replaced from switch statement to switch expression
             TreeWithResult result = num switch
             {
                 1 => TreeGenerator1(),
@@ -1138,14 +1362,14 @@ namespace Final_Project_Corona
         {
             double grade = 0;
             const int MAX_GRADE = 60;
-            grade += TestQ1(); // OK
-            grade += TestQ2(); // OK   
-            grade += TestQ3(); // OK 
-            grade += TestQ4(); // OK
-            grade += TestQ5(); // not written yet 
-            grade += TestQ6(); // OK
-            grade += TestQ7(); // OK 
-            grade += TestQ8(); // not written yet 
+            //grade += TestQ1(); // OK
+            //grade += TestQ2(); // OK   
+            //grade += TestQ3(); // OK 
+            //grade += TestQ4(); // OK
+            grade += TestQ5(); // in-testing 
+            //grade += TestQ6(); // OK
+            //grade += TestQ7(); // OK 
+            //grade += TestQ8(); // not written yet 
             Console.WriteLine("***************FINISHED ALL TESTS******************");
             Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);
             return grade;
@@ -1183,6 +1407,24 @@ namespace Final_Project_Corona
         public double Budget { get; set; }
         internal MySofa[] Sofas { get; set; }
         internal MySofa[] Result { get; set; }
+    }
+    class TwinListWithResult
+    {
+        //Data structure to hold all the outputs of TwinList
+        public TwinListWithResult(Node<int> node, Node<int> odd, 
+            Node<int> even, Node<int> swtch)
+        {
+            Node = node;
+            Odd = odd;
+            Even = even;
+            Swtch = swtch;
+        }
+
+        public Node<int> Node { get; set; }
+        public Node<int> Odd { get; set; }
+        public Node<int> Even { get; set; }
+        public Node<int> Swtch { get; set; }
+
     }
 
     class StackWithResult

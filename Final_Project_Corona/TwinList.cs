@@ -20,6 +20,7 @@ namespace Final_Project_Corona
         {
             int i = 1;
             Node<int> n = chain, output = new Node<int>(chain.GetInfo());
+            n = n.GetNext();
             Node<int> holder = output;
             while (n != null)
             {
@@ -36,7 +37,8 @@ namespace Final_Project_Corona
         public Node<int> GetOdd()
         {
             int i = 2;
-            Node<int> n = chain, output = new Node<int>(chain.GetInfo());
+            Node<int> n = chain, output = new Node<int>(chain.GetNext().GetInfo());
+            n = n.GetNext().GetNext();
             Node<int> holder = output;
             while (n != null)
             {
@@ -59,22 +61,22 @@ namespace Final_Project_Corona
         public Node<int> SwitchChain()
         {
             Node<int> odd = GetOdd(), even = GetEven();
-            Node<int> output = new Node<int> (even.GetInfo());
-            output.SetNext(new Node<int> (odd.GetInfo()));
+            Node<int> output = new Node<int> (odd.GetInfo());
+            output.SetNext(new Node<int> (even.GetInfo()));
             Node<int> holderOutput = output.GetNext();
             odd = odd.GetNext();
             even = even.GetNext();
-            while (even != null)
+            while (odd != null)
             {
-                holderOutput.SetNext(new Node<int>(even.GetInfo()));
-                holderOutput = holderOutput.GetNext();
                 holderOutput.SetNext(new Node<int>(odd.GetInfo()));
+                holderOutput = holderOutput.GetNext();
+                holderOutput.SetNext(new Node<int>(even.GetInfo()));
                 holderOutput = holderOutput.GetNext();
                 odd = odd.GetNext();
                 even = even.GetNext();
             }
-            if (odd != null)
-                holderOutput.SetNext(new Node<int>(odd.GetInfo()));
+            if (even != null)
+                holderOutput.SetNext(new Node<int>(even.GetInfo()));
             return output;
            
         }

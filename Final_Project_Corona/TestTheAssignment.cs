@@ -228,8 +228,11 @@ namespace Final_Project_Corona
         }
         private static void ObjectOrientedFinished(string vehicle, double grade, int maxGrade)
         {
-            Console.WriteLine("Object Oriented Test for " + vehicle + " has ended!" +
-                "recieved "+grade+"/"+maxGrade);
+            Console.WriteLine("Object Oriented Test for " + vehicle + " has ended!");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Recieved "+grade+"/"+maxGrade);
+            Console.WriteLine();
+            Console.ResetColor();
         }
         private static void FinishTaskMesseges(int num, double maxGrade, double grade)
         {
@@ -456,6 +459,19 @@ namespace Final_Project_Corona
             return s;
         }
 
+        private static string AuxBinTree(BinNode<int> binNode)
+        {
+            if (binNode == null)
+                return "";
+            return AuxBinTree(binNode.GetLeft()) + " " + binNode.GetInfo() +
+                AuxBinTree(binNode.GetRight());
+        }
+
+        private static string BinTreeInOrder(BinNode<int> binNode)
+        {
+            return "In Order: " + ('[' + AuxBinTree(binNode) + ']').Remove(1,1);
+        }
+
         private static double GraderQ1(int[] arr, int numTest, int expected, int expectedSum)
         {
             int grade = 0;
@@ -537,7 +553,7 @@ namespace Final_Project_Corona
             {
                 recieved = Program.Q2(arr);
                 FinishedWithoutException();
-                if (recieved == expected)
+                if (!recieved ^ expected)
                 {
                     grade = 0.5;
                     PassedTest(numTest, expected);
@@ -794,7 +810,7 @@ namespace Final_Project_Corona
             {
                 recieved = hw.IsBalanced();
                 FinishedWithoutException();
-                if (recieved == expected)
+                if (!recieved ^ expected)
                 {
                     PassedTest(numTest, expected);
                     return 0.75;
@@ -1111,7 +1127,7 @@ namespace Final_Project_Corona
 
         private static double Q6cGrader(Stack<char> st, int expected, int numTest)
         {
-            TestStarted("Stack - view code and details", numTest);
+            TestStarted(st.ToString(), numTest);
             int recieved;
             try
             {
@@ -1273,13 +1289,13 @@ namespace Final_Project_Corona
 
         private static double Q7aGrader(BinNode<int> root, bool expected, int numTest)
         {
-            TestStarted("Bin Tree - view code and details", numTest);
+            TestStarted(BinTreeInOrder(root), numTest);
             bool recieved;
             try
             {
                 recieved = Program.IsStatic(root);
                 FinishedWithoutException();
-                if (recieved == expected)
+                if (!recieved ^ expected)
                 {
                     PassedTest(numTest, expected);
                     return 1;
@@ -1298,13 +1314,13 @@ namespace Final_Project_Corona
 
         private static double Q7bGrader(BinNode<int> root, bool expected, int numTest)
         {
-            TestStarted("Bin Tree - view code and details", numTest);
+            TestStarted(BinTreeInOrder(root), numTest);
             bool recieved;
             try
             {
                 recieved = Program.IsVeryStatic(root);
                 FinishedWithoutException();
-                if (recieved == expected)
+                if (!recieved ^ expected)
                 {
                     PassedTest(numTest, expected);
                     return 1;
@@ -1707,7 +1723,7 @@ namespace Final_Project_Corona
         }
         private static double SetAmountCar(Car car, double changedCapacity, double newAmount, double value, int numTest)
         {
-            TestStarted("Change capacity  in car to " + changedCapacity, numTest);
+            TestStarted("Change amount in car to " + changedCapacity, numTest);
             double recieved;
             try
             {
@@ -1716,23 +1732,23 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == newAmount)
                 {
-                    PassedTest(numTest, (int)newAmount);
+                    PassedTest(numTest, newAmount);
                     return value;
                 }
-                FailedWithoutException(numTest, (int)newAmount, (int)recieved);
+                FailedWithoutException(numTest, newAmount, recieved);
                 return 0;
 
             }
             catch (Exception e)
             {
-                RecievedException(e, (int)newAmount);
+                RecievedException(e, newAmount);
                 FailedWithExceptions(numTest);
                 return 0;
             }
         }
         private static double SetAmountBus(Bus bus, double changedCapacity, int newAmount, double value, int numTest)
         {
-            TestStarted("Change capacity in bus to " + changedCapacity, numTest);
+            TestStarted("Change amount in bus to " + changedCapacity, numTest);
             double recieved;
             try
             {
@@ -1741,16 +1757,16 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (recieved == newAmount)
                 {
-                    PassedTest(numTest, (int)newAmount);
+                    PassedTest(numTest, newAmount);
                     return value;
                 }
-                FailedWithoutException(numTest, (int)newAmount, (int)recieved);
+                FailedWithoutException(numTest, newAmount, recieved);
                 return 0;
 
             }
             catch (Exception e)
             {
-                RecievedException(e, (int)newAmount);
+                RecievedException(e, newAmount);
                 FailedWithExceptions(numTest);
                 return 0;
             }

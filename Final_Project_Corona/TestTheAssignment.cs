@@ -246,11 +246,15 @@ namespace Final_Project_Corona
 
         //some auxileries methodes for comparing
 
+        private static bool EqualsDouble(double num1, double num2)
+        {
+            return Math.Abs(num1 - num2) < 0.01;
+        }
         private static bool CompareSofas(MySofa s1, Sofa s2)
         {
             return s1.Country.ToLower() == s2.GetCountry().ToLower() &&
                    s1.Model.ToLower() == s2.GetModel().ToLower() &&
-                   Math.Abs(s1.Price - s2.GetPrice()) < 0.01;
+                    EqualsDouble(s1.Price, s2.GetPrice());
         }
 
         /* This Methods removes all whitespaces in a string
@@ -1045,11 +1049,8 @@ namespace Final_Project_Corona
             catch (Exception e)
             {
                 RecievedExceptionAtConstructor(e, "TwinList");
+                return 0;
             }
-            // I have no idea why I have to assign again,
-            // but without it I get compilation error, weird...
-            // even weirder - it didn't happen with handweight
-            twinList = new TwinList(result.Node);
             if (num == 1)
                 num = 0;
             else num = 4;
@@ -1780,7 +1781,7 @@ namespace Final_Project_Corona
                 bicycle.Ride(kmRode);
                 recieved = bicycle.GetCurrentPrecentage();
                 FinishedWithoutException();
-                if (recieved == expected)
+                if (EqualsDouble(expected, recieved))
                 {
                     PassedTest(numTest, expected);
                     return value;
@@ -1806,7 +1807,7 @@ namespace Final_Project_Corona
                 bicycle.Charge(minCharged);
                 recieved = bicycle.GetCurrentPrecentage();
                 FinishedWithoutException();
-                if (recieved == expected)
+                if (EqualsDouble(expected, recieved))
                 {
                     PassedTest(numTest, expected);
                     return value;
@@ -1872,7 +1873,7 @@ namespace Final_Project_Corona
             }
         }
 
-        private static double CheckCapacity(Car car, double expected, int numTest)
+        private static double CheckAmount(Car car, double expected, int numTest)
         {
             TestStarted("Check amount after FuelUp() car", numTest);
             double recieved;
@@ -1880,7 +1881,7 @@ namespace Final_Project_Corona
             {
                 recieved = car.GetAmount();
                 FinishedWithoutException();
-                if (recieved == expected)
+                if (EqualsDouble(expected, recieved))
                 {
                     PassedTest(numTest, expected);
                     return 0.5;
@@ -1896,7 +1897,7 @@ namespace Final_Project_Corona
                 return 0;
             }
         }
-        private static double CheckCapacityBus(Bus bus, int expected, int numTest)
+        private static double CheckAmountBus(Bus bus, int expected, int numTest)
         {
             TestStarted("Check amount after FuelUp() bus", numTest);
             double recieved;
@@ -1958,7 +1959,7 @@ namespace Final_Project_Corona
             double priceForFuel = (capacity - newAmount) * PRICE_PER_LITER;
             grade += FuelUpTest(car, priceForFuel, 6);
             //check that amount == capacity at the end for 0.5 points - max 5 points
-            grade += CheckCapacity(car, capacity, 7);
+            grade += CheckAmount(car, capacity, 7);
             ObjectOrientedFinished("Car", grade, maxGrade);
             return grade;
 
@@ -2004,7 +2005,7 @@ namespace Final_Project_Corona
             double priceForFuel = (capacity - newAmount) * PRICE_PER_LITER;
             grade += FuelUpTestBus(bus, priceForFuel, 7);
             //check that amount == capacity at the end for 0.5 points - max 5 points
-            grade += CheckCapacityBus(bus, capacity, 8);
+            grade += CheckAmountBus(bus, capacity, 8);
             ObjectOrientedFinished("Bus", grade, maxGrade);
             return grade;
         }
@@ -2045,11 +2046,11 @@ namespace Final_Project_Corona
             grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.5, 4);
             //riding more then possible, if they have 91% they can ride 18km
             //each ride and charge - 0.75 point
-            kmRode = 20;
+            kmRode = 30;
             newPrecentage = 0;
             grade += RideTest(bicycle, kmRode, newPrecentage, 0.75, 5);
-            //charging for 33.33 minutes should supply 100%
-            minCharged = 60;
+            //charging for 33.33 minutes should supply 100% from 0%
+            minCharged = 35;
             newPrecentage = MAX_PRECENTAGE;
             grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.75, 6);
             ObjectOrientedFinished("Bus", grade, maxGrade);

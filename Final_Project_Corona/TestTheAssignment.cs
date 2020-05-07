@@ -2041,19 +2041,19 @@ namespace Final_Project_Corona
             int minCharged = 27;//should chrarge to 91%
             //riding and charging not until the end - 0.5 each
             grade += SellBicycleTest(bicycle, newName);
-            grade += RideTest(bicycle, kmRode, newPrecentage, 0.5, 3);
+            grade += RideTest(bicycle, kmRode, newPrecentage, 0.25, 3);
             newPrecentage += minCharged * PERCENTAGE_PER_MINUTE;//should be 91
-            grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.5, 4);
+            grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.25, 4);
             //riding more then possible, if they have 91% they can ride 18km
             //each ride and charge - 0.75 point
             kmRode = 30;
             newPrecentage = 0;
-            grade += RideTest(bicycle, kmRode, newPrecentage, 0.75, 5);
+            grade += RideTest(bicycle, kmRode, newPrecentage, 1, 5);
             //charging for 33.33 minutes should supply 100% from 0%
             minCharged = 35;
             newPrecentage = MAX_PRECENTAGE;
-            grade += ChargeTest(bicycle, minCharged, newPrecentage, 0.75, 6);
-            ObjectOrientedFinished("Bus", grade, maxGrade);
+            grade += ChargeTest(bicycle, minCharged, newPrecentage, 1, 6);
+            ObjectOrientedFinished("Bicycle", grade, maxGrade);
             return grade;
         }
 

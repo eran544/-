@@ -1346,9 +1346,7 @@ namespace Final_Project_Corona
         private static TreeWithResult TreeGenerator2()
         {
             //root 8, left 6. right 5 - should return false
-            BinNode<int> tree = new BinNode<int>(8);
-            tree.SetLeft(new BinNode<int>(6));
-            tree.SetRight(new BinNode<int>(5));
+            BinNode<int> tree = new BinNode<int>(new BinNode<int>(6), 8, (new BinNode<int>(5)));
             return new TreeWithResult(tree, false);
         }
         private static TreeWithResult TreeGenerator3()

@@ -36,7 +36,7 @@ namespace Final_Project_Corona
         }
         public Node<int> GetOdd()
         {
-            int i = 2;
+            int i = 0;
             Node<int> n = chain, output = new Node<int>(chain.GetNext().GetInfo());
             n = n.GetNext().GetNext();
             Node<int> holder = output;

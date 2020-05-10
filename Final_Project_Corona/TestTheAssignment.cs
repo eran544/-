@@ -907,6 +907,13 @@ namespace Final_Project_Corona
                     PassedTest(numTest, expected.ToString());
                     return 1;
                 }
+                //if they return the even maybe return half?
+                if (CompareNodes(recieved, MyTwinList.Even))
+                {
+                    FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
+                    Console.WriteLine("Recieved half of this test points because of confusion");
+                    return 0.5;
+                }
                 FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
                 return 0;
 
@@ -930,6 +937,13 @@ namespace Final_Project_Corona
                 {
                     PassedTest(numTest, expected.ToString());
                     return 1;
+                }
+                //if they return the oppsite odd return half?
+                if (CompareNodes(recieved, MyTwinList.Odd))
+                {
+                    FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
+                    Console.WriteLine("Recieved half of this test points because of confusion");
+                    return 0.5;
                 }
                 FailedWithoutException(numTest, expected.ToString(), recieved.ToString());
                 return 0;

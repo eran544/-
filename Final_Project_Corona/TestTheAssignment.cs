@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
 
 namespace Final_Project_Corona
 {
@@ -34,8 +36,6 @@ namespace Final_Project_Corona
         * Copyright: Eran Salomon, Mekif Vav School, Beersheva, Israel.
         * Date: April - May 2020
         */
-
-
 
 
         //some print methods that were exctracted
@@ -476,6 +476,7 @@ namespace Final_Project_Corona
             return "In Order: " + ('[' + AuxBinTree(binNode) + ']').Remove(1,1);
         }
 
+
         private static double GraderQ1(int[] arr, int numTest, int expected, int expectedSum)
         {
             int grade = 0;
@@ -486,7 +487,12 @@ namespace Final_Project_Corona
                 Console.WriteLine("**************begin Q1 ouput***************");
                 //color user output in cyan
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                recieved1 = Program.Q1(arr);
+                /*var task = Task.Run(() => Program.Q1(arr));
+                if (task.Wait(TimeSpan.FromSeconds(5)))
+                    recieved1 = task.Result;
+                else throw new TimeoutException();
+                */
+                recieved1 = RunThreads<int>.RunThread(() => Program.Q1(arr));
                 Console.ResetColor();
                 FinishedWithoutException();
                 if (recieved1 == expected)
@@ -555,7 +561,7 @@ namespace Final_Project_Corona
             double grade = 0;
             try
             {
-                recieved = Program.Q2(arr);
+                recieved = RunThreads<bool>.RunThread(() => Program.Q2(arr));
                 FinishedWithoutException();
                 if (!recieved ^ expected)
                 {
@@ -609,7 +615,7 @@ namespace Final_Project_Corona
                 bool recieved;
                 try
                 {
-                    Sofa studentSofa = new Sofa(sent.Model, sent.Country, sent.Price);
+                    Sofa studentSofa = RunThreads<Sofa>.RunThread(() => new Sofa(sent.Model, sent.Country, sent.Price));
                     recieved = CompareSofas(sent, studentSofa);
                     FinishedWithoutException();
                     if (recieved)
@@ -639,7 +645,7 @@ namespace Final_Project_Corona
             Sofa[] output = new Sofa[arr.Length];
             for (int i = 0; i < arr.Length; i++)
             {
-                output[i] = new Sofa(arr[i].Model, arr[i].Country, arr[i].Price);
+                output[i] = RunThreads<Sofa>.RunThread(()=> new Sofa(arr[i].Model, arr[i].Country, arr[i].Price));
             }
             return output;
         }
@@ -661,7 +667,7 @@ namespace Final_Project_Corona
             try
             {
                 Sofa[] studentSofaArr = MySofaToStudentsSofa(sent);
-                recieved = Program.ThreeSofas(studentSofaArr, budget);
+                recieved = RunThreads<Sofa[]>.RunThread(() => Program.ThreeSofas(studentSofaArr, budget));
                 FinishedWithoutException();
                 if (CompareArrSofas(expected, recieved))
                 {
@@ -785,7 +791,7 @@ namespace Final_Project_Corona
             string recieved;
             try
             {
-                recieved = hw.ToString();
+                recieved = RunThreads<string>.RunThread(() => hw.ToString());
                 FinishedWithoutException();
                 if (CompareToString(expected, recieved))
                 {
@@ -812,7 +818,7 @@ namespace Final_Project_Corona
             bool recieved;
             try
             {
-                recieved = hw.IsBalanced();
+                recieved = RunThreads<bool>.RunThread(() => hw.IsBalanced());
                 FinishedWithoutException();
                 if (!recieved ^ expected)
                 {
@@ -841,9 +847,9 @@ namespace Final_Project_Corona
             HandWeight hw1, hw2, hw3;
             try
             {
-                hw1 = new HandWeight();
-                hw2 = new HandWeight(2.5);
-                hw3 = new HandWeight(3.14, 2);
+                hw1 = RunThreads<HandWeight>.RunThread(() =>new HandWeight());
+                hw2 = RunThreads<HandWeight>.RunThread(() => new HandWeight(2.5));
+                hw3 = RunThreads<HandWeight>.RunThread(() => new HandWeight(3.14, 2));
             }
             catch (Exception e)
             {
@@ -876,7 +882,7 @@ namespace Final_Project_Corona
             Node<int> expected = MyTwinList.Node;
             try
             {
-                Node<int> recieved = result.GetChain();
+                Node<int> recieved = RunThreads<Node<int>>.RunThread(() => result.GetChain());
                 FinishedWithoutException();
                 if (CompareNodes(expected, recieved))
                 {
@@ -900,7 +906,7 @@ namespace Final_Project_Corona
             Node<int> expected = MyTwinList.Odd;
             try
             {
-                Node<int> recieved = result.GetOdd();
+                Node<int> recieved = RunThreads<Node<int>>.RunThread(() => result.GetOdd());
                 FinishedWithoutException();
                 if (CompareNodes(expected, recieved))
                 {
@@ -931,7 +937,7 @@ namespace Final_Project_Corona
             Node<int> expected = MyTwinList.Even;
             try
             {
-                Node<int> recieved = result.GetEven();
+                Node<int> recieved = RunThreads<Node<int>>.RunThread(() => result.GetEven());
                 FinishedWithoutException();
                 if (CompareNodes(expected, recieved))
                 {
@@ -962,7 +968,7 @@ namespace Final_Project_Corona
             Node<int> expected = MyTwinList.Swtch;
             try
             {
-                Node<int> recieved = result.SwitchChain();
+                Node<int> recieved = RunThreads<Node<int>>.RunThread(() => result.SwitchChain());
                 FinishedWithoutException();
                 if (CompareNodes(expected, recieved))
                 {
@@ -1094,7 +1100,7 @@ namespace Final_Project_Corona
             int recieved;
             try
             {
-                recieved = Program.StringToInt(str);
+                recieved = RunThreads<int>.RunThread(() => Program.StringToInt(str));
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
@@ -1121,7 +1127,7 @@ namespace Final_Project_Corona
             int recieved;
             try
             {
-                recieved = Program.CalcStr(num1, num2, op);
+                recieved = RunThreads<int>.RunThread(() => Program.CalcStr(num1, num2, op));
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
@@ -1146,7 +1152,7 @@ namespace Final_Project_Corona
             int recieved;
             try
             {
-                recieved = Program.MathStack(st);
+                recieved = RunThreads<int>.RunThread(() => Program.MathStack(st));
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
@@ -1308,7 +1314,7 @@ namespace Final_Project_Corona
             bool recieved;
             try
             {
-                recieved = Program.IsStatic(root);
+                recieved = RunThreads<bool>.RunThread(() => Program.IsStatic(root));
                 FinishedWithoutException();
                 if (!recieved ^ expected)
                 {
@@ -1333,7 +1339,7 @@ namespace Final_Project_Corona
             bool recieved;
             try
             {
-                recieved = Program.IsVeryStatic(root);
+                recieved = RunThreads<bool>.RunThread(() => Program.IsVeryStatic(root));
                 FinishedWithoutException();
                 if (!recieved ^ expected)
                 {
@@ -1491,6 +1497,8 @@ namespace Final_Project_Corona
             int count = 0;
             const double VALUE = 0.25;
             TestStarted("getters of car", 1);
+            double result;
+            string resultSt;
             for (int i = 0; i < 6; i++)
             {
                 try
@@ -1498,22 +1506,28 @@ namespace Final_Project_Corona
                     switch (i)
                     {
                         case 0:
-                            if (car.GetLicensePlate() == liscencePlate) count++;
+                            result = RunThreads<int>.RunThread(() => car.GetLicensePlate());
+                            if (result == liscencePlate) count++;
                             break;
                         case 1:
-                            if (car.GetNumOfSeats() == numOfSeats) count++;
+                            result = RunThreads<int>.RunThread(() => car.GetNumOfSeats());
+                            if (result == numOfSeats) count++;
                             break;
                         case 2:
-                            if (car.GetNumOfWheels() == numOfWheels) count++;
+                            result = RunThreads<int>.RunThread(() => car.GetNumOfWheels());
+                            if (result == numOfWheels) count++;
                             break;
                         case 3:
-                            if (car.GetCapacity() == capacity) count++;
+                            result = RunThreads<int>.RunThread(() => car.GetCapacity());
+                            if (result == capacity) count++;
                             break;
                         case 4:
-                            if (car.GetAmount() == amount) count++;
+                            result = RunThreads<double>.RunThread(() => car.GetAmount());
+                            if (result == amount) count++;
                             break;
                         default:
-                            if (car.GetOwner() == name) count++;
+                            resultSt = RunThreads<string>.RunThread(() => car.GetOwner());
+                            if (resultSt == name) count++;
                             break;
 
                     }
@@ -1541,6 +1555,8 @@ namespace Final_Project_Corona
             int count = 0;
             const double VALUE = 0.15;
             TestStarted("getters of car", 1);
+            double result;
+            string resultSt;
             for (int i = 0; i < 7; i++)
             {
                 try
@@ -1548,25 +1564,32 @@ namespace Final_Project_Corona
                     switch (i)
                     {
                         case 0:
-                            if (bus.GetLicensePlate() == liscencePlate) count++;
+                            result = RunThreads<int>.RunThread(() => bus.GetLicensePlate());
+                            if (result == liscencePlate) count++;
                             break;
                         case 1:
-                            if (bus.GetNumOfSeats() == numOfSeats) count++;
+                            result = RunThreads<int>.RunThread(() => bus.GetNumOfSeats());
+                            if (result == numOfSeats) count++;
                             break;
                         case 2:
-                            if (bus.GetNumOfWheels() == numOfWheels) count++;
+                            result = RunThreads<int>.RunThread(() => bus.GetNumOfWheels());
+                            if (result == numOfWheels) count++;
                             break;
                         case 3:
-                            if (bus.GetCapacity() == capacity) count++;
+                            result = RunThreads<int>.RunThread(() => bus.GetCapacity());
+                            if (result == capacity) count++;
                             break;
                         case 4:
-                            if (bus.GetAmount() == amount) count++;
+                            result = RunThreads<double>.RunThread(() => bus.GetAmount());
+                            if (result == amount) count++;
                             break;
                         case 5:
-                            if (bus.GetBusLine() == busLine) count++;
+                            result = RunThreads<double>.RunThread(() => bus.GetBusLine());
+                            if (result == busLine) count++;
                             break;
                         default:
-                            if (bus.GetOwner() == name) count++;
+                            resultSt = RunThreads<string>.RunThread(() => bus.GetOwner());
+                            if (resultSt == name) count++;
                             break;
 
                     }
@@ -1593,6 +1616,8 @@ namespace Final_Project_Corona
             int count = 0;
             const double VALUE = 0.3;
             TestStarted("getters of bicycle", 1);
+            double result;
+            string resultSt;
             for (int i = 0; i < 5; i++)
             {
                 try
@@ -1600,19 +1625,24 @@ namespace Final_Project_Corona
                     switch (i)
                     {
                         case 0:
-                            if (bicycle.GetLicensePlate() == liscencePlate) count++;
+                            result = RunThreads<int>.RunThread(() => bicycle.GetLicensePlate());
+                            if (result == liscencePlate) count++;
                             break;
                         case 1:
-                            if (bicycle.GetNumOfSeats() == numOfSeats) count++;
+                            result = RunThreads<int>.RunThread(() => bicycle.GetNumOfSeats());
+                            if (result == numOfSeats) count++;
                             break;
                         case 2:
-                            if (bicycle.GetNumOfWheels() == numOfWheels) count++;
+                            result = RunThreads<int>.RunThread(() => bicycle.GetNumOfWheels());
+                            if (result == numOfWheels) count++;
                             break;
                         case 3:
+                            result = RunThreads<double>.RunThread(() => bicycle.GetCurrentPrecentage());
                             if (bicycle.GetCurrentPrecentage() == currentPrecentage) count++;
                             break;
                         default:
-                            if (bicycle.GetOwner() == name) count++;
+                            resultSt = RunThreads<string>.RunThread(() => bicycle.GetOwner());
+                            if (resultSt == name) count++;
                             break;
 
                     }
@@ -1640,8 +1670,11 @@ namespace Final_Project_Corona
             string recieved;
             try
             {
-                car.SellVehicle(newName);
-                recieved = car.GetOwner();
+                //car.SellVehicle(newName);
+                var task = Task.Run(() => car.SellVehicle(newName));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<string>.RunThread(() => car.GetOwner());
                 FinishedWithoutException();
                 if (recieved == newName)
                 {
@@ -1665,8 +1698,10 @@ namespace Final_Project_Corona
             string recieved;
             try
             {
-                bus.SellVehicle(newName);
-                recieved = bus.GetOwner();
+                var task = Task.Run(() => bus.SellVehicle(newName));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<string>.RunThread(() => bus.GetOwner());
                 FinishedWithoutException();
                 if (recieved == newName)
                 {
@@ -1690,8 +1725,10 @@ namespace Final_Project_Corona
             string recieved;
             try
             {
-                bicycle.SellVehicle(newName);
-                recieved = bicycle.GetOwner();
+                var task = Task.Run(() => bicycle.SellVehicle(newName));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<string>.RunThread(() => bicycle.GetOwner());
                 FinishedWithoutException();
                 if (recieved == newName)
                 {
@@ -1715,8 +1752,10 @@ namespace Final_Project_Corona
             int recieved;
             try
             {
-                bus.ChangeBusLine(newLine);
-                recieved = bus.GetBusLine();
+                var task = Task.Run(() => bus.ChangeBusLine(newLine));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<int>.RunThread(() => bus.GetBusLine());
                 FinishedWithoutException();
                 if (recieved == newLine)
                 {
@@ -1740,8 +1779,10 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                car.SetAmount(changedCapacity);
-                recieved = car.GetAmount();
+                var task = Task.Run(() => car.SetAmount(newAmount));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<double>.RunThread(() => car.GetAmount());
                 FinishedWithoutException();
                 if (recieved == newAmount)
                 {
@@ -1765,8 +1806,10 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                bus.SetAmount(changedCapacity);
-                recieved = bus.GetAmount();
+                var task = Task.Run(() => bus.SetAmount(newAmount));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<double>.RunThread(() => bus.GetAmount());
                 FinishedWithoutException();
                 if (recieved == newAmount)
                 {
@@ -1790,8 +1833,10 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                bicycle.Ride(kmRode);
-                recieved = bicycle.GetCurrentPrecentage();
+                var task = Task.Run(() => bicycle.Ride(kmRode));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<double>.RunThread(() => bicycle.GetCurrentPrecentage());
                 FinishedWithoutException();
                 if (EqualsDouble(expected, recieved))
                 {
@@ -1816,8 +1861,10 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                bicycle.Charge(minCharged);
-                recieved = bicycle.GetCurrentPrecentage();
+                var task = Task.Run(() => bicycle.Charge(minCharged));
+                if (!task.Wait(TimeSpan.FromSeconds(5)))
+                    throw new TimeoutException();
+                recieved = RunThreads<double>.RunThread(() => bicycle.GetCurrentPrecentage());
                 FinishedWithoutException();
                 if (EqualsDouble(expected, recieved))
                 {
@@ -1842,7 +1889,7 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                recieved = car.FuelUp();
+                recieved = RunThreads<double>.RunThread(() => car.FuelUp());
                 FinishedWithoutException();
                 if (recieved == priceForFuel)
                 {
@@ -1866,7 +1913,7 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                recieved = bus.FuelUp();
+                recieved = RunThreads<double>.RunThread(() => bus.FuelUp());
                 FinishedWithoutException();
                 if (recieved == priceForFuel)
                 {
@@ -1891,7 +1938,7 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                recieved = car.GetAmount();
+                recieved = RunThreads<double>.RunThread(() => car.GetAmount());
                 FinishedWithoutException();
                 if (EqualsDouble(expected, recieved))
                 {
@@ -1915,7 +1962,7 @@ namespace Final_Project_Corona
             double recieved;
             try
             {
-                recieved = bus.GetAmount();
+                recieved = RunThreads<double>.RunThread(() => bus.GetAmount());
                 FinishedWithoutException();
                 if (recieved == expected)
                 {
@@ -1945,7 +1992,7 @@ namespace Final_Project_Corona
             Car car;
             try
             {
-                car = new Car(liscencePlate, numOfSeats, numOfWheels, name, capacity);
+                car = RunThreads<Car>.RunThread(() => new Car(liscencePlate, numOfSeats, numOfWheels, name, capacity));
             }
             catch (Exception e)
             {
@@ -1988,7 +2035,7 @@ namespace Final_Project_Corona
             Bus bus;
             try
             {
-                bus = new Bus(liscencePlate, numOfSeats, numOfWheels, name, capacity, busLine);
+                bus = RunThreads<Bus>.RunThread(() => new Bus(liscencePlate, numOfSeats, numOfWheels, name, capacity, busLine));
             }
             catch (Exception e)
             {
@@ -2035,7 +2082,7 @@ namespace Final_Project_Corona
             Bicycle bicycle;
             try
             {
-                bicycle = new Bicycle(liscencePlate, numOfSeats, numOfWheels, name);
+                bicycle = RunThreads<Bicycle>.RunThread(() => new Bicycle(liscencePlate, numOfSeats, numOfWheels, name));
             }
             catch (Exception e)
             {
@@ -2175,5 +2222,16 @@ namespace Final_Project_Corona
 
         public BinNode<int> Tree { get; set; }
         public bool Result { get; set; }
+    }
+}
+
+public class RunThreads<T>
+{
+    public static T RunThread(Func<T> function)
+    {
+        var task = Task.Run(() => function.Invoke());
+        if (task.Wait(TimeSpan.FromSeconds(5)))
+            return task.Result;
+        else throw new TimeoutException();
     }
 }

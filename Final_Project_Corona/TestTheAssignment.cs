@@ -2229,6 +2229,13 @@ public class RunThreads<T>
 {
     public static T RunThread(Func<T> function)
     {
+        /* I have thought everything was good until I've found out:
+         * The case of infinite loop is unhandaled
+         * Here I'm taking care for it, creating new thread.
+         * the other thread is waiting for him to finish the task for 5 seconds
+         * those task should be ended in a few miliseconds
+         * credit: https://stackoverflow.com/a/13513854/11655979
+         */
         var task = Task.Run(() => function.Invoke());
         if (task.Wait(TimeSpan.FromSeconds(5)))
             return task.Result;

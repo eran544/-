@@ -33,7 +33,7 @@ namespace Final_Project_Corona
         * Since that exception cannot be caught by try-catch,  we will replace it by
         * throwing new NotImplementedException, dropping all the points of this function, 
         * even if it did pass one or more of previous tests.
-        * Copyright: Eran Salomon, Mekif Vav School, Beersheva, Israel.
+        * Author: Eran Salomon, Mekif Vav School, Beersheva, Israel.
         * Date: April - May 2020
         */
 
@@ -62,34 +62,16 @@ namespace Final_Project_Corona
             Console.WriteLine("Passed Test " + numTest);
             Console.ResetColor();
         }
-        private static void PassedTest(int numTest, int expected)
+        private static void PassedTest(int numTest, object expected)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Passed Test " + numTest + ", recieved as expected: " + expected);
             Console.ResetColor();
         }
-        private static void PassedTest(int numTest, bool expected)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + expected);
-            Console.ResetColor();
-        }
-        private static void PassedTest(int numTest, MySofa[] expected)
+        private static void PassedMySofaTest(int numTest, MySofa[] expected)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + ArrToString(expected));
-            Console.ResetColor();
-        }
-        private static void PassedTest(int numTest, string expected)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + expected);
-            Console.ResetColor();
-        }
-        private static void PassedTest(int numTest, double expected)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Passed Test " + numTest + ". Recieved as expected: " + expected);
             Console.ResetColor();
         }
         private static void FinishedWithoutException()
@@ -98,74 +80,22 @@ namespace Final_Project_Corona
             Console.WriteLine("**************Finished without exception***************");
             Console.ResetColor();
         }
-        private static void FailedWithoutException(int numTest, int expected, int recieved)
+        private static void FailedWithoutException(int numTest, object expected, object recieved)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Failed test " + numTest + " expected: " + expected + ", but recieved: " + recieved);
             Console.ResetColor();
         }
-        private static void FailedWithoutException(int numTest, bool expected, bool recieved)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Failed test " + numTest + " expected: " + expected + ", but recieved: " + recieved);
-            Console.ResetColor();
-        }
-
-        private static void FailedWithoutException(int numTest, string expected, string recieved)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Failed test " + numTest + " expected: " + expected + ", but recieved: " + recieved);
-            Console.ResetColor();
-        }
-        private static void FailedWithoutException(int numTest, double expected, double recieved)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Failed test " + numTest + " expected: " + expected + ", but recieved: " + recieved);
-            Console.ResetColor();
-        }
-        /*
-        private static void RecievedException(Exception e)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Recieved Exception: " + e.Message);
-            Console.ResetColor();
-
-        }
-        */
-        private static void RecievedException(Exception e, MySofa expected)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Expected: " + StringifyMySofa(expected) + " but recieved Exception: " + e.Message);
-            Console.ResetColor();
-        }
-        private static void RecievedException(Exception e, int expected)
+        private static void RecievedException(Exception e, object expected)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
             Console.ResetColor();
         }
-        private static void RecievedException(Exception e, string expected)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
-            Console.ResetColor();
-        }
-        private static void RecievedException(Exception e, bool expected)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
-            Console.ResetColor();
-        }
-        private static void RecievedException(Exception e, MySofa[] expected)
+        private static void RecievedMySofaException(Exception e, MySofa[] expected)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Expected: " + ArrToString(expected) + " but recieved Exception: " + e.Message);
-            Console.ResetColor();
-        }
-        private static void RecievedException(Exception e, double expected)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Expected: " + expected + " but recieved Exception: " + e.Message);
             Console.ResetColor();
         }
         private static void RecievedExceptionAtConstructor(Exception e, string where)
@@ -477,6 +407,8 @@ namespace Final_Project_Corona
         }
 
 
+
+        //The code that actually tests the studentsw code starts here
         private static double GraderQ1(int[] arr, int numTest, int expected, int expectedSum)
         {
             int grade = 0;
@@ -671,7 +603,7 @@ namespace Final_Project_Corona
                 FinishedWithoutException();
                 if (CompareArrSofas(expected, recieved))
                 {
-                    PassedTest(numTest, expected);
+                    PassedMySofaTest(numTest, expected);
                     return 1.5;
                 }
                 else
@@ -682,7 +614,7 @@ namespace Final_Project_Corona
             }
             catch (Exception e)
             {
-                RecievedException(e, expected);
+                RecievedMySofaException(e, expected);
                 FailedWithExceptions(numTest);
                 return 0;
             }
@@ -1885,6 +1817,7 @@ namespace Final_Project_Corona
 
         private static double FuelUpTest(Car car, double priceForFuel, int numTest)
         {
+
             TestStarted("FuelUp() car", numTest);
             double recieved;
             try
@@ -2164,7 +2097,10 @@ namespace Final_Project_Corona
             Country = country;
             Price = price;
         }
-
+        public override string ToString()
+        {
+            return "<Model: \"" + this.Model + "\", Country: \"" + this.Country + "\", Price = " + this.Price + ">";
+        }
     }
     class SofaWithResults
     {
@@ -2178,6 +2114,7 @@ namespace Final_Project_Corona
         public double Budget { get; set; }
         internal MySofa[] Sofas { get; set; }
         internal MySofa[] Result { get; set; }
+
     }
     class TwinListWithResult
     {

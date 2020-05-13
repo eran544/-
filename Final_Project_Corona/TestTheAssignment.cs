@@ -115,8 +115,10 @@ namespace Final_Project_Corona
         }
         private static void Recieved(double maxGrade, double grade)
         {
+            double newGrade = (grade * 5) / 6;
+            double newMaxGrade = (maxGrade * 5) / 6;
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Recived " + grade + "/" + maxGrade);
+            Console.WriteLine("Recived " + newGrade + "/" + newMaxGrade);
             Console.ResetColor();
         }
 
@@ -156,11 +158,13 @@ namespace Final_Project_Corona
         {
             Console.WriteLine("Object Oriented Test Started - Begin: " + vehicle);
         }
-        private static void ObjectOrientedFinished(string vehicle, double grade, int maxGrade)
+        private static void ObjectOrientedFinished(string vehicle, double grade, double maxGrade)
         {
+            double newGrade = (grade * 5) / 6;
+            double newMaxGrade = (maxGrade * 5) / 6;
             Console.WriteLine("Object Oriented Test for " + vehicle + " has ended!");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("Recieved "+grade+"/"+maxGrade);
+            Console.WriteLine("Recieved "+ newGrade + "/"+ newMaxGrade);
             Console.WriteLine();
             Console.ResetColor();
         }
@@ -2066,6 +2070,7 @@ namespace Final_Project_Corona
         {
             double grade = 0;
             const int MAX_GRADE = 60;
+            const int NEW_MAX_GRADE = 50;
             grade += TestQ1(); // OK
             grade += TestQ2(); // OK   
             grade += TestQ3(); // OK 
@@ -2075,7 +2080,9 @@ namespace Final_Project_Corona
             grade += TestQ7(); // OK 
             grade += TestQ8(); // OK 
             Console.WriteLine("***************FINISHED ALL TESTS******************");
-            Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);
+            //Console.WriteLine("Final grade for automatic tests: " + grade + "/" + MAX_GRADE);
+            double factored_grage = (grade * NEW_MAX_GRADE) / MAX_GRADE;
+            Console.WriteLine("Final grade for automatic tests: " + factored_grage + "/" + NEW_MAX_GRADE);
             return grade;
         }
     }

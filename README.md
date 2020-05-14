@@ -4,7 +4,9 @@ Due to Coronavirus outbreak, 11th grade students that were majoring 2 scientific
 Students that chose to have internal grade in Computer science recived this assignments as an replacement to the exam planned to have. The assignment has 2 parts:
 
 Part 1: 60% of the grade - were tested by the script written in the file TestTheAssignment.cs. In other word ducument I will explain how this code works (in Hebrew)
+UPDATE 14/5: decided to change it to 50%
 Part 2: 40% grade - testing the student in person (online - via Zoom) in which the student has to explain and answer questions regarding their code.
+UPDATE 14/5: decided to change it to 50%
 
 The project also includes my solution to the project.
 
@@ -32,5 +34,5 @@ HOW TO USE TestYourAssignment.cs BY YOURSELF:
 8. To continue testing the next task, press Enter.
 9. If you got anymore questions, please dont hesitate asking Adir or me (Eran).
 
-Copyright: Eran Salomon, Mekif Vav school, Beersheva, Israel
+Author: Eran Salomon, Mekif Vav school, Beersheva, Israel
 Date: April - May 2020
